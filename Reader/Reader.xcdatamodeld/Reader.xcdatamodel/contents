@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C3006" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Asset" representedClassName="Asset" syncable="YES">
+        <attribute name="downloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="filePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="issue" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="assets" inverseEntity="Issue" syncable="YES"/>
+    </entity>
+    <entity name="Issue" representedClassName="Issue" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="downloaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="downloading" optional="YES" transient="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="free" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="issueDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="new" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="productIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="purchased" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="receiptData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="toc" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Asset" inverseName="issue" inverseEntity="Asset" syncable="YES"/>
+        <fetchedProperty name="coverImage" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Asset" predicateString="self.type == &quot;asset.cover&quot; AND self.issue = $FETCH_SOURCE"/>
+        </fetchedProperty>
+        <fetchedProperty name="previews" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Asset" predicateString="type = &quot;asset.preview&quot; AND self.issue = $FETCH_SOURCE"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="Asset" positionX="54" positionY="27" width="128" height="135"/>
+        <element name="Issue" positionX="-180" positionY="-14" width="128" height="284"/>
+    </elements>
+</model>

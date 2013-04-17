@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>reader Reference</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="index.html">NewsStand starter kit</a></h1>
+				<a id="developerHome" href="index.html">Basispress</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">NewsStand starter kit</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar"></ul>
+		</header>
+		<article>
+			<div id="overview_contents" role="main">
+				<div class="main-navigation navigation-top">
+					<a href="hierarchy.html">Next</a>
+				</div>
+
+				<div id="container">
+					<div>
+						<h1>Quick start guide</h1>
+<p>Application structure</p>
+<pre>
+-- RootViewController - is just container for two main views, which implementation you can find in project.
+-- MagazineRack/ - implementation of different components of UICollection view
+-- Model
+---- Asset - handles work with downloading staff like images and pdfs. You need that for downloading cover, previews and pdfs.
+---- Issue - logic to work with magazine issues. It has not custom logic and just CoreData model for mapping objects from database
+-- External
+---- MBProgressHUD - shows progress bar when downloading issue
+---- JSONKit - library to easily work with JSON answers from API calls
+---- MagicalRecord - is a wrap on CoreData
+---- PDFReader - simple free (under MIT) pdf reader
+</pre>
+<h1>Setup</h1>
+<p>
+	<ol><li>Change Bundle Identifier in Target</li>
+	<li>Change @"password" in verifySubscription method in InAppStore.m</li>
+	<li>Take a look at Reader-Prefix.pch file and define constants FREE_APP & USE_SANDBOX</li>
+	<li>If you are "Developer license" holder:
+	<ol>
+		<li>Change *urlPush in AppDelegate.m</li>
+		<li>Change *UpdateURL & *ReceiptURL in IssueManager.m</li>
+	</ol>
+</li>
+	</ol>
+
+</p>
+<h1>Customization</h1>
+<p>
+Application have only two views you can customize from box: 
+<ul><li>MagazineRackViewController</li><li>MagazineDetailViewController</li></ul>
+and for most options you don't need more if you wanna simple newsstand application.</br>
+Our main effort was to make customization easy and that's why we used <b>StoryBoard</b>. First, take a look there.
+</p> 
+<img src="img/storyboard.png">
+						<p>
+In iOS 6 Apple has introduced a new class called UICollectionView that makes adding your own custom layouts and layout transitions (like those in the Photos app) incredibly simple to build. So MagazineRack is pretty much implementation of UICollectionView. 
+						</p>
+<p>
+Here are some usefull links if you are not familiar with UICollectionView:
+<ul>
+	<li><a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UICollectionViewController_clas/Reference/Reference.html">Apple UICollectionViewController reference</a></li>
+	<li><a href="http://www.raywenderlich.com/22324/beginning-uicollectionview-in-ios-6-part-12">Beginning UICollectionView</a>. Good Tutorial by Brandon Trebitowski. You can find second part of tutorial there.</li>
+</ul>
+</p>
+					</div>
+</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">Reference</h1>
+					</div>		
+				</div>
+				<div id="container">
+                        
+                    
+					
+					
+					<div class="index-column">
+						<h2 class="index-title">Class References</h2>
+						<ul>
+							
+							<li><a href="Classes/AppDelegate.html">AppDelegate</a></li>
+							
+							<li><a href="Classes/InAppStore.html">InAppStore</a></li>
+							
+							<li><a href="Classes/Issue.html">Issue</a></li>
+							
+							<li><a href="Classes/IssueManager.html">IssueManager</a></li>
+														
+							<li><a href="Classes/JSONDecoder.html">JSONDecoder</a></li>
+							
+							<li><a href="Classes/MBProgressHUD.html">MBProgressHUD</a></li>
+							
+							<li><a href="Classes/MBRoundProgressView.html">MBRoundProgressView</a></li>
+							
+							<li><a href="Classes/MagazineRackCell.html">MagazineRackCell</a></li>
+							
+							<li><a href="Classes/MagazineRackRenderer.html">MagazineRackRenderer</a></li>
+							
+							<li><a href="Classes/MagicalRecord.html">MagicalRecord</a></li>
+							
+							<li><a href="Classes/ReaderViewController.html">ReaderViewController</a></li>
+							
+							<li><a href="Classes/ThumbsViewController.html">ThumbsViewController</a></li>
+							
+						</ul>
+					</div>
+					
+					
+						
+					<div class="index-column">
+						
+						<h2 class="index-title">Protocol References</h2>
+						<ul>
+							
+							<li><a href="Protocols/MBProgressHUDDelegate.html">MBProgressHUDDelegate</a></li>
+							
+						</ul>
+						
+						
+					</div>
+					<div class="index-column">
+						
+						<h2 class="index-title">ServerSide Endpoints</h2>
+						<ul>
+							
+							<li><a href="readme.html">If you want to implement your own server side, check this readme</a></li>
+							
+						</ul>
+						
+						
+					</div>
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<a href="hierarchy.html">Next</a>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Basispress. All rights reserved. (Last updated: 2013-02-01)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+	
+					</div>
+				</div>
+			</div>
+		</article>		
+	</body>
+</html>
