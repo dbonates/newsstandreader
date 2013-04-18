@@ -94,11 +94,11 @@ static InAppStore *_sharedInstance = nil;
     
     if (self.storeCacheState == StoreCacheStateDirty) {
         
-        NSLog(@"criando loadSet com array: %@", _allProductIdentifiers);
+//        NSLog(@"criando loadSet com array: %@", _allProductIdentifiers);
         
         NSSet *loadSet = [NSSet setWithArray:_allProductIdentifiers];
         
-        NSLog(@"loadSet criado: %@", loadSet);
+//        NSLog(@"loadSet criado: %@", loadSet);
         
         SKProductsRequest *_productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:loadSet];
         [_productsRequest setDelegate:self];
@@ -132,11 +132,11 @@ static InAppStore *_sharedInstance = nil;
 
 - (void)storeCacheUpdated
 {
-    NSLog(@"%s, %s", __FILE__, __FUNCTION__);
+//    NSLog(@"%s, %s", __FILE__, __FUNCTION__);
     if (_allProductIdentifiers.count == _allProducts.count) {
 
         self.storeCacheState = StoreCacheStateOK;
-        NSLog(@"[linha %d] %@", __LINE__, _issueProducts);
+//        NSLog(@"[linha %d] %@", __LINE__, _issueProducts);
     }
     else {
         self.storeCacheState = StoreCacheStateDirty;
@@ -282,7 +282,7 @@ static InAppStore *_sharedInstance = nil;
                                    }
                                    else {
                                        NSDictionary *responseDictionary = [data objectFromJSONData];
-                                       NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
+//                                       NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
                                        if ([responseDictionary[@"status"] isEqual:@(0)]) {
                                            NSDictionary *lastReceiptDictionary = responseDictionary[@"latest_receipt_info"];
                                            NSTimeInterval expiresTimeInterval = [lastReceiptDictionary[@"expires_date"] doubleValue] / 1000;
@@ -311,7 +311,7 @@ static InAppStore *_sharedInstance = nil;
                                    
                                }];
         
-        NSLog(@"\n\n\n");
+//        NSLog(@"\n\n\n");
 
     }
 }
@@ -418,26 +418,26 @@ static InAppStore *_sharedInstance = nil;
     if (self.storeCacheState != StoreCacheStateUpdating)
         return;
 
-    NSLog(@"response.products: %@", response.products);
+//    NSLog(@"response.products: %@", response.products);
 
     if (!response.products.count) {
         self.storeCacheState = StoreCacheStateDirty;
-        NSLog(@"product request no products");
+//        NSLog(@"product request no products");
         return;
     }
     
 
-    NSLog(@"response.products.count: %d", response.products.count);
+//    NSLog(@"response.products.count: %d", response.products.count);
     
     for (SKProduct *p in response.products) {
-        NSLog(@"====================");
-        NSLog(@"productIdentifier: %@", p.productIdentifier);
-        NSLog(@"====================");
+//        NSLog(@"====================");
+//        NSLog(@"productIdentifier: %@", p.productIdentifier);
+//        NSLog(@"====================");
         
     }
     
-    NSLog(@"TODAS AS EDIÇÕES: %@", _issuesProductIdentifiers);
-    NSLog(@"TODAS AS ASSINATURAS: %@", _subscriptionProductIdentifiers);
+//    NSLog(@"TODAS AS EDIÇÕES: %@", _issuesProductIdentifiers);
+//    NSLog(@"TODAS AS ASSINATURAS: %@", _subscriptionProductIdentifiers);
     
     NSPredicate *newSubscriptionsPredicate = [NSPredicate predicateWithFormat:@"NOT self.productIdentifier IN %@", _issuesProductIdentifiers];
     NSPredicate *newIssuesPredicate = [NSPredicate predicateWithFormat:@"NOT self.productIdentifier IN %@", _subscriptionProductIdentifiers];
@@ -445,13 +445,13 @@ static InAppStore *_sharedInstance = nil;
     NSArray *newSubscriptions = [response.products filteredArrayUsingPredicate:newSubscriptionsPredicate];
     NSArray *newIssues = [response.products filteredArrayUsingPredicate:newIssuesPredicate];
     
-    NSLog(@"Assinaturas atualizadas:");
+//    NSLog(@"Assinaturas atualizadas:");
     for (SKProduct *s in newSubscriptions) {
-        NSLog(@"newSubscription : %@", s.productIdentifier);
+//        NSLog(@"newSubscription : %@", s.productIdentifier);
     }
-    NSLog(@"Edições atualizadas:");
+//    NSLog(@"Edições atualizadas:");
     for (SKProduct *e in newIssues) {
-        NSLog(@"newIssue : %@", e.productIdentifier);
+//        NSLog(@"newIssue : %@", e.productIdentifier);
     }
     
 
@@ -462,17 +462,17 @@ static InAppStore *_sharedInstance = nil;
         subscriptionsUpdated = YES;
         _subscriptionProducts = newSubscriptions;
     }
-    NSLog(@"_subscriptionProducts.count: %d", _subscriptionProducts.count);
-    NSLog(@"newSubscriptions.count: %d", newSubscriptions.count);
-    NSLog(@"subscriptionsUpdated? %d", subscriptionsUpdated);
+//    NSLog(@"_subscriptionProducts.count: %d", _subscriptionProducts.count);
+//    NSLog(@"newSubscriptions.count: %d", newSubscriptions.count);
+//    NSLog(@"subscriptionsUpdated? %d", subscriptionsUpdated);
     
     if (_issueProducts.count != newIssues.count) {
         issuesUpdated = YES;
         _issueProducts = newIssues;
     }
-    NSLog(@"_issueProducts: %d", _issueProducts.count);
-    NSLog(@"newIssues: %d", newIssues.count);
-    NSLog(@"issuesUpdated? %d", issuesUpdated);
+//    NSLog(@"_issueProducts: %d", _issueProducts.count);
+//    NSLog(@"newIssues: %d", newIssues.count);
+//    NSLog(@"issuesUpdated? %d", issuesUpdated);
     
     if (issuesUpdated || subscriptionsUpdated) {
         _allProducts = [_subscriptionProducts arrayByAddingObjectsFromArray:_issueProducts];

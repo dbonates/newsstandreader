@@ -13,9 +13,11 @@
 #import "InAppStore.h"
 #import "JSONKit.h"
 #import "NSData+Base64.h"
+#import "CredentialStore.h"
 
 @implementation AppDelegate
 
+BOOL printSubscriber;
 
 // push url
 
@@ -29,17 +31,30 @@ NSString *pushURL = @"http://panorama.bonates.com/push_tokens.json";
 {
     
     
+    self.credentialStore = [[CredentialStore alloc] init];
+    
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(tokenExpiredProvidences:) name:@"token-expired" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(tokenSaved:) name:@"token-changed" object:nil];
+     */
+    
+    
 //  checar se é a primeira vez
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"firstLaunch"] == nil) {
         [defaults setBool:YES forKey:@"firstLaunch"];
+        [self.credentialStore clearSavedCredentials];
         [defaults synchronize];
     }
     if ([defaults objectForKey:@"freeSubscriptionEnabled"] == nil) {
         [defaults setBool:NO forKey:@"freeSubscriptionEnabled"];
         [defaults synchronize];
     }
+    
+    printSubscriber = [self.credentialStore isLoggedIn];
+
     
     [MagicalRecord setupCoreDataStack];
 
@@ -126,7 +141,7 @@ NSString *pushURL = @"http://panorama.bonates.com/push_tokens.json";
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"store cache state >>> %d",[InAppStore sharedInstance].storeCacheState);
+    NSLog(@"store cache state > %d",[InAppStore sharedInstance].storeCacheState);
 }
 
 - (void)logIssues

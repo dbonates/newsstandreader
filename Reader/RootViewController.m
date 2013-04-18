@@ -34,7 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"view did load");
+//    NSLog(@"view did load");
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
@@ -95,7 +95,7 @@
         self.magazineDetailViewController = [storyboard instantiateViewControllerWithIdentifier:@"MagazineDetailViewController"];
         self.magazineDetailViewController.issue = issue;
         [self addChildViewController:self.magazineDetailViewController];
-        NSLog(@"%@", self.magazineDetailViewController);
+//        NSLog(@"%@", self.magazineDetailViewController);
         
         _gradientImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"detail_gradient"]];
         [self.view addSubview:_gradientImageView];

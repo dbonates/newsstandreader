@@ -319,7 +319,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                                    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                    dataString =[dataString stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
                                    responseDictionary = [dataString objectFromJSONString];
-                                   NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
+//                                   NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
                                    if ([responseDictionary[@"status"] isEqualToString:@"ok"]) {
                                        NSString *downloadURL = responseDictionary[@"download_url"];
                                        [self downloadDocumentForIssue:iss withURL:downloadURL productID:productID];
@@ -330,7 +330,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
     {
         NSString *printed = @"receipt";
         NSString *requestURLString = [NSString stringWithFormat:@"%@printed=%@&product_identifier=%@",baseURL, printed, productID];
-        NSLog(@"requestURLString: %@", requestURLString);
+//        NSLog(@"requestURLString: %@", requestURLString);
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [NSURLConnection sendAsynchronousRequest:request
@@ -340,7 +340,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                                    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                    dataString =[dataString stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
                                    responseDictionary = [dataString objectFromJSONString];
-                                   NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
+//                                   NSLog(@"\n[%s]\n[%d]\nresponse dictionary %@", __FILE__, __LINE__, responseDictionary);
                                    if ([responseDictionary[@"status"] isEqualToString:@"ok"]) {
                                        NSString *downloadURL = responseDictionary[@"download_url"];
                                        [self downloadDocumentForIssue:iss withURL:downloadURL productID:productID];
@@ -352,13 +352,13 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         NSString *requestURLString = [NSString stringWithFormat:@"%@data=%@&product_identifier=%@",baseURL, base64Receipt, issue.productIdentifier];
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSLog(@"1 ***** URL: %@", url);
+//        NSLog(@"1 ***** URL: %@", url);
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                                    
-                                   NSDictionary *jsonPeople = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                   NSLog(@"***\nresponse description: %@\n***", jsonPeople);
+//                                   NSDictionary *jsonPeople = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                                   NSLog(@"***\nresponse description: %@\n***", jsonPeople);
                                    
                                    NSDictionary *responseDictionary = [data objectFromJSONData];
                                    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];

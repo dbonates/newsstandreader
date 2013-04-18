@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class CredentialStore;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (nonatomic, strong) CredentialStore *credentialStore;
 
 @property (strong, nonatomic) UIWindow *window;
 
