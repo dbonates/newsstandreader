@@ -16,11 +16,7 @@
 #import "CredentialStore.h"
 
 
-//NSString *UpdateURL = @"http://basispress.com/api/protocol.json?id=";
-NSString *UpdateURL = @"http://panorama.bonates.com/api/protocol.json?id=";
 
-//NSString *ReceiptURL = @"http://basispress.com/api/receipt.json?id=";
-NSString *ReceiptURL = @"http://panorama.bonates.com/api/receipt.json?id=";
 
 NSString *ProductIdentifierKey = @"product_identifier";
 NSString *NameKey = @"name";
@@ -81,7 +77,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
 {
     NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
     
-    NSURL *url = [NSURL URLWithString:[UpdateURL stringByAppendingString:[NSBundle mainBundle].bundleIdentifier]];
+    NSURL *url = [NSURL URLWithString:[UPDATE_URL stringByAppendingString:[NSBundle mainBundle].bundleIdentifier]];
     
     NSLog(@"updatetURL :: url: %@", url);
     
@@ -300,7 +296,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
     NSString *productID = iss.productIdentifier;
     if (issue.downloadingValue)
         return;
-    NSString *baseURL = [ReceiptURL stringByAppendingFormat:@"%@&",[NSBundle mainBundle].bundleIdentifier];
+    NSString *baseURL = [RECEIPT_URL stringByAppendingFormat:@"%@&",[NSBundle mainBundle].bundleIdentifier];
     
     if (issue.purchasedValue) {
         NSString *base64Receipt = [issue.receiptData base64Encode];
@@ -308,7 +304,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                 
         NSString *requestURLString = [NSString stringWithFormat:@"%@data=%@",baseURL, base64Receipt];
         
-        NSLog(@"ReceiptURL :: requestURLString: %@", requestURLString);
+//        NSLog(@"RECEIPT_URL :: requestURLString: %@", requestURLString);
         
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];

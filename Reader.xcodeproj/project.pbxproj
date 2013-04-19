@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3767A21B171FA0B2000D04DB /* TODO.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3767A21A171FA0B2000D04DB /* TODO.rtf */; };
+		37783C421721122500B38140 /* PSPDFKit.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37783C401721122500B38140 /* PSPDFKit.strings */; };
 		3797B4DF171DF9C200973926 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3797B4DC171DF9C200973926 /* SVProgressHUD.bundle */; };
 		3797B4E0171DF9C200973926 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3797B4DE171DF9C200973926 /* SVProgressHUD.m */; };
 		3797B4E6171DF9C900973926 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3797B4E3171DF9C900973926 /* SSKeychain.m */; };
@@ -27,6 +28,17 @@
 		3797B50B171E094700973926 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3797B4DA171DF84400973926 /* LoginViewController.m */; };
 		3797B50C171E094A00973926 /* CredentialStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3797B4D6171DF83200973926 /* CredentialStore.m */; };
 		3797B50D171E094D00973926 /* AuthAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3797B4D8171DF83200973926 /* AuthAPIClient.m */; };
+		37EDC1F11720AD550068C291 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1EA1720AD550068C291 /* PSPDFKit.framework */; };
+		37EDC1F21720AD550068C291 /* ACKNOWLEDGEMENTS in Resources */ = {isa = PBXBuildFile; fileRef = 37EDC1EC1720AD550068C291 /* ACKNOWLEDGEMENTS */; };
+		37EDC1F31720AD550068C291 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 37EDC1ED1720AD550068C291 /* LICENSE */; };
+		37EDC1F41720AD550068C291 /* PSPDFKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 37EDC1EE1720AD550068C291 /* PSPDFKit.bundle */; };
+		37EDC1F51720AD550068C291 /* PSPDFKit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 37EDC1EF1720AD550068C291 /* PSPDFKit.xcconfig */; };
+		37EDC1F61720AD550068C291 /* VERSION in Resources */ = {isa = PBXBuildFile; fileRef = 37EDC1F01720AD550068C291 /* VERSION */; };
+		37EDC1F81720ADEB0068C291 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1F71720ADEB0068C291 /* CoreText.framework */; };
+		37EDC1FA1720AE350068C291 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1F91720AE350068C291 /* CoreMedia.framework */; };
+		37EDC1FC1720AE410068C291 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1FB1720AE410068C291 /* MediaPlayer.framework */; };
+		37EDC1FE1720AE4F0068C291 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1FD1720AE4F0068C291 /* AVFoundation.framework */; };
+		37EDC2001720AE5B0068C291 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EDC1FF1720AE5B0068C291 /* AssetsLibrary.framework */; };
 		D01523AE1682F2E000BF528A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D01523AD1682F2E000BF528A /* libz.dylib */; };
 		D01523B0168398D000BF528A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01523AF168398D000BF528A /* QuartzCore.framework */; };
 		D01F85AA16B997ED000182BF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D01F856E16B997ED000182BF /* Default-568h@2x.png */; };
@@ -174,6 +186,7 @@
 
 /* Begin PBXFileReference section */
 		3767A21A171FA0B2000D04DB /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
+		37783C411721122500B38140 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = PSPDFKit.strings; sourceTree = "<group>"; };
 		3797B4D5171DF83200973926 /* CredentialStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialStore.h; sourceTree = "<group>"; };
 		3797B4D6171DF83200973926 /* CredentialStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialStore.m; sourceTree = "<group>"; };
 		3797B4D7171DF83200973926 /* AuthAPIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthAPIClient.h; sourceTree = "<group>"; };
@@ -209,6 +222,17 @@
 		3797B505171DFA4400973926 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3797B507171DFA8400973926 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3797B509171E032E00973926 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		37EDC1EA1720AD550068C291 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSPDFKit.framework; sourceTree = "<group>"; };
+		37EDC1EC1720AD550068C291 /* ACKNOWLEDGEMENTS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENTS; sourceTree = "<group>"; };
+		37EDC1ED1720AD550068C291 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		37EDC1EE1720AD550068C291 /* PSPDFKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PSPDFKit.bundle; sourceTree = "<group>"; };
+		37EDC1EF1720AD550068C291 /* PSPDFKit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = PSPDFKit.xcconfig; sourceTree = "<group>"; };
+		37EDC1F01720AD550068C291 /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
+		37EDC1F71720ADEB0068C291 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		37EDC1F91720AE350068C291 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		37EDC1FB1720AE410068C291 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		37EDC1FD1720AE4F0068C291 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		37EDC1FF1720AE5B0068C291 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D01523AD1682F2E000BF528A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D01523AF168398D000BF528A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D01F856E16B997ED000182BF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -433,6 +457,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37EDC2001720AE5B0068C291 /* AssetsLibrary.framework in Frameworks */,
+				37EDC1FE1720AE4F0068C291 /* AVFoundation.framework in Frameworks */,
+				37EDC1FC1720AE410068C291 /* MediaPlayer.framework in Frameworks */,
+				37EDC1FA1720AE350068C291 /* CoreMedia.framework in Frameworks */,
+				37EDC1F81720ADEB0068C291 /* CoreText.framework in Frameworks */,
 				3797B50A171E032E00973926 /* SystemConfiguration.framework in Frameworks */,
 				3797B508171DFA8400973926 /* Security.framework in Frameworks */,
 				3797B506171DFA4400973926 /* MobileCoreServices.framework in Frameworks */,
@@ -446,12 +475,21 @@
 				D0A90EC1168169D100681996 /* UIKit.framework in Frameworks */,
 				D0A90EC3168169D100681996 /* Foundation.framework in Frameworks */,
 				D0A90EC5168169D100681996 /* CoreGraphics.framework in Frameworks */,
+				37EDC1F11720AD550068C291 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37783C3F1721122500B38140 /* pt.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				37783C401721122500B38140 /* PSPDFKit.strings */,
+			);
+			path = pt.lproj;
+			sourceTree = "<group>";
+		};
 		3797B4D4171DF80600973926 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -513,6 +551,28 @@
 				3797B4FB171DF9D100973926 /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		37EDC1E91720AD550068C291 /* PSPDFKit.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				37EDC1EA1720AD550068C291 /* PSPDFKit.framework */,
+				37EDC1EB1720AD550068C291 /* Resources */,
+			);
+			path = PSPDFKit.embeddedframework;
+			sourceTree = "<group>";
+		};
+		37EDC1EB1720AD550068C291 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37EDC1EC1720AD550068C291 /* ACKNOWLEDGEMENTS */,
+				37EDC1ED1720AD550068C291 /* LICENSE */,
+				37783C3F1721122500B38140 /* pt.lproj */,
+				37EDC1EE1720AD550068C291 /* PSPDFKit.bundle */,
+				37EDC1EF1720AD550068C291 /* PSPDFKit.xcconfig */,
+				37EDC1F01720AD550068C291 /* VERSION */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D01F856916B997ED000182BF /* Graphics */ = {
@@ -611,6 +671,12 @@
 		D0A90EBF168169D100681996 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37EDC1E91720AD550068C291 /* PSPDFKit.embeddedframework */,
+				37EDC1FF1720AE5B0068C291 /* AssetsLibrary.framework */,
+				37EDC1FD1720AE4F0068C291 /* AVFoundation.framework */,
+				37EDC1FB1720AE410068C291 /* MediaPlayer.framework */,
+				37EDC1F91720AE350068C291 /* CoreMedia.framework */,
+				37EDC1F71720ADEB0068C291 /* CoreText.framework */,
 				3797B509171E032E00973926 /* SystemConfiguration.framework */,
 				3797B507171DFA8400973926 /* Security.framework */,
 				3797B505171DFA4400973926 /* MobileCoreServices.framework */,
@@ -933,7 +999,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = Basispress;
+				ORGANIZATIONNAME = Bonates.;
 			};
 			buildConfigurationList = D0A90EB6168169D100681996 /* Build configuration list for PBXProject "Reader" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -943,6 +1009,7 @@
 				en,
 				ru,
 				Base,
+				pt,
 			);
 			mainGroup = D0A90EB1168169D100681996;
 			productRefGroup = D0A90EBD168169D100681996 /* Products */;
@@ -1027,6 +1094,12 @@
 				F9F0047816E1142D0075200B /* Storyboard.storyboard in Resources */,
 				3797B4DF171DF9C200973926 /* SVProgressHUD.bundle in Resources */,
 				3767A21B171FA0B2000D04DB /* TODO.rtf in Resources */,
+				37EDC1F21720AD550068C291 /* ACKNOWLEDGEMENTS in Resources */,
+				37EDC1F31720AD550068C291 /* LICENSE in Resources */,
+				37EDC1F41720AD550068C291 /* PSPDFKit.bundle in Resources */,
+				37EDC1F51720AD550068C291 /* PSPDFKit.xcconfig in Resources */,
+				37EDC1F61720AD550068C291 /* VERSION in Resources */,
+				37783C421721122500B38140 /* PSPDFKit.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1124,9 +1197,21 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		37783C401721122500B38140 /* PSPDFKit.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37783C411721122500B38140 /* pt */,
+			);
+			name = PSPDFKit.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		D0A90ED8168169D100681996 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37EDC1EF1720AD550068C291 /* PSPDFKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1143,6 +1228,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"LOCAL=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1159,6 +1245,7 @@
 		};
 		D0A90ED9168169D100681996 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37EDC1EF1720AD550068C291 /* PSPDFKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1188,6 +1275,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PSPDFKit.embeddedframework\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Reader-Prefix.pch";
 				INFOPLIST_FILE = "Reader/Reader-Info.plist";
@@ -1209,6 +1300,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bonates";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bonates";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PSPDFKit.embeddedframework\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Reader-Prefix.pch";
 				INFOPLIST_FILE = "Reader/Reader-Info.plist";

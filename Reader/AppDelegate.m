@@ -15,22 +15,16 @@
 #import "NSData+Base64.h"
 #import "CredentialStore.h"
 
+
 @implementation AppDelegate
 
 BOOL printSubscriber;
-
-// push url
-
-//NSString *pushURL = @"http://basispress.com/push_tokens.json";
-NSString *pushURL = @"http://panorama.bonates.com/push_tokens.json";
-
-
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    
+
     self.credentialStore = [[CredentialStore alloc] init];
     
     /*[[NSNotificationCenter defaultCenter] addObserver:self
@@ -107,7 +101,7 @@ NSString *pushURL = @"http://panorama.bonates.com/push_tokens.json";
     if (!serverNotified.boolValue) {
         NSData *pushToken = [defaults valueForKey:@"com.reader.pushToken"];
         if (pushToken) {
-            NSURL *serverURL = [NSURL URLWithString:pushURL];
+            NSURL *serverURL = [NSURL URLWithString:PUSH_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:serverURL];
             [request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
             NSDictionary *dict = @{@"bundle_id":[NSBundle mainBundle].bundleIdentifier, @"push_token":@{@"token" : [pushToken base64Encode]}};

@@ -10,6 +10,7 @@
 #import "IssueManager.h"
 #import "ReaderViewController.h"
 #import "MBProgressHUD.h"
+#include <PSPDFKit/PSPDFKit.h> 
 
 @interface RootViewController ()<ReaderViewControllerDelegate>
 
@@ -131,6 +132,63 @@
         
         NSString *filePath = documentAsset.filePath;
         
+        // Create the PSPDFDocument. (container for one or multiple pdfs)
+        NSURL *documentURL = [NSURL fileURLWithPath:filePath];
+        
+        PSPDFDocument *document = [PSPDFDocument PDFDocumentWithURL:documentURL];
+        document.title = @"Panorama da aquicultura";
+        
+        
+        document.editableAnnotationTypes = [NSOrderedSet orderedSetWithArray:@[
+                                            PSPDFAnnotationTypeStringLink,
+                                            PSPDFAnnotationTypeStringHighlight,
+                                            PSPDFAnnotationTypeStringUnderline,
+                                            PSPDFAnnotationTypeStringStrikeout,
+                                            PSPDFAnnotationTypeStringNote,
+                                            PSPDFAnnotationTypeStringLine
+                                            ]];
+        
+        
+        /*
+         Anotações  possíveis
+         
+         PSPDFAnnotationTypeStringLink;
+         PSPDFAnnotationTypeStringHighlight;
+         PSPDFAnnotationTypeStringUnderline;
+         PSPDFAnnotationTypeStringStrikeout;
+         PSPDFAnnotationTypeStringNote;
+         PSPDFAnnotationTypeStringFreeText;
+         PSPDFAnnotationTypeStringInk;
+         PSPDFAnnotationTypeStringSquare;
+         PSPDFAnnotationTypeStringCircle;
+         PSPDFAnnotationTypeStringLine;
+         PSPDFAnnotationTypeStringSignature;
+         
+         */
+        
+        
+        // Open view controller. Embed into an UINavigationController to enable the toolbar.
+        PSPDFViewController *pdfController = [[PSPDFViewController alloc] initWithDocument:document];
+        
+        ///// CONFIGURACOES
+        
+        pdfController.pageTransition = PSPDFPageCurlTransition;
+        pdfController.pageMode = PSPDFPageModeAutomatic;
+        pdfController.statusBarStyleSetting = PSPDFStatusBarSmartBlackHideOnIpad;
+        
+        // don't use thumbnails if the PDF is not rendered.
+        // FullPageBlocking feels good when combined with pageCurl, less great with other scroll modes, especially PSPDFPageScrollContinuousTransition.
+        pdfController.renderingMode = PSPDFPageRenderingModeFullPageBlocking;
+        
+        ////////
+        
+        
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pdfController];
+        [self presentViewController:navController animated:YES completion:nil];
+       
+        
+        /*
+        
         ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:nil];
         NSLog(@"document %@", document);
         if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
@@ -145,6 +203,8 @@
             
             [self presentViewController:readerViewController animated:YES completion:^(){NSLog(@"completion");}];
         }
+         
+         */
    
     }
 }

@@ -9,16 +9,15 @@
 #import "AuthAPIClient.h"
 #import "CredentialStore.h"
 
-#define BASE_URL @"http://filersite.bonates.com"
-
 @implementation AuthAPIClient
 
 + (id)sharedClient
 {
+    
     static AuthAPIClient *__instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *baseUrl = [NSURL URLWithString:BASE_URL];
+        NSURL *baseUrl = [NSURL URLWithString:BASE_AUTH_URL];
         __instance = [[AuthAPIClient alloc] initWithBaseURL:baseUrl];
     });
     return __instance;

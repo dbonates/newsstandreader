@@ -11,6 +11,16 @@
 #define FREE_APP NO // IF your app with almost all issues free, then use YES instead of NO
 #define USE_SANDBOX YES // IF you are using sandbox to test purchases use YES
 
+#define BASE_AUTH_URL @"http://filersite.bonates.com"
+
+
+//    #define UPDATE_URL   @"http://localhost:3000/api/protocol.json?id="
+//    #define RECEIPT_URL    @"http:/localhost:3000/api/receipt.json?id="
+//    #define PUSH_URL     @"http://localhost:3000"
+
+    #define UPDATE_URL   @"http://panorama.bonates.com/api/protocol.json?id="
+    #define RECEIPT_URL    @"http://panorama.bonates.com/api/receipt.json?id="
+    #define PUSH_URL     @"http://panorama.bonates.com"
 
 
 #ifdef __OBJC__
