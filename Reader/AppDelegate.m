@@ -58,8 +58,15 @@ BOOL printSubscriber;
                                   forKeyPath:@"storeCacheState"
                                      options:NSKeyValueObservingOptionNew
                                      context:nil];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+#ifdef DEBUG
+    // For debugging - allow multiple pushes per day
+    NSLog(@"yes, debugging...");
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+#endif
+    
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeNewsstandContentAvailability];
     
@@ -76,15 +83,19 @@ BOOL printSubscriber;
     [[IssueManager sharedInstance] update];
     
 }
+
+// indica erro ao registrar o aparelho para receber push notifications
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     NSLog(@"\n*****\n\n [linha %d] Falha ao registrar para push notifications \n     %@\n\n*****", __LINE__, error);
 }
 
+
+// indica registro bem sucedido do gadget para receber push notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
 
-    NSLog(@"registered %@", deviceToken);
+    NSLog(@"registrado com sucesso. token: %@", deviceToken);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:deviceToken forKey:@"com.reader.pushToken"];
     [defaults setValue:@NO forKey:@"com.reader.serverNotified"];

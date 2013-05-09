@@ -76,26 +76,29 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     [super viewDidAppear:animated];
 }
 
+
+
+
 - (void)configureLayoutForPortrait
 {
     MagazineRackLayout *layout = (MagazineRackLayout*)self.collectionView.collectionViewLayout;
     
-    layout.headerReferenceSize = CGSizeMake(768, 229);
-    layout.minimumLineSpacing = 250.0 - 186.0;
+    layout.headerReferenceSize = CGSizeMake(768, HEADER_HEIGHT);
+    layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 35.0;
-    layout.sectionInset = UIEdgeInsetsMake(0, 60, 250-186, 60);
-    layout.headerReferenceSize = CGSizeMake(768, 129);
+    layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, MARGEM_TOP, MARGEM_DIREITA); // laterais
+//    layout.headerReferenceSize = CGSizeMake(768, 150);
 }
 
 - (void)configureLayoutForLandscape
 {
     MagazineRackLayout *layout = (MagazineRackLayout*)self.collectionView.collectionViewLayout;
     
-    layout.headerReferenceSize = CGSizeMake(1024, 206);
-    layout.minimumLineSpacing = 250.0 - 186.0;
-    layout.minimumInteritemSpacing = 55.0;
-    layout.sectionInset = UIEdgeInsetsMake(0, 60, 250-186, 60);
-    layout.headerReferenceSize = CGSizeMake(768, 229);
+    layout.headerReferenceSize = CGSizeMake(1024, HEADER_HEIGHT);
+    layout.minimumLineSpacing = 50;
+    layout.minimumInteritemSpacing = 35.0;
+    layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, SHELF_HEIGHT-COVER_HEIGHT_CONSTRAIN, MARGEM_DIREITA); // laterais
+//    layout.headerReferenceSize = CGSizeMake(768, 100);
     
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -113,13 +116,15 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     // Dispose of any resources that can be recreated.
 }
 
+
+
 #pragma mark - UICollectionViewDelegate && UICollectionViewDataSource & UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *image = [UIImage imageNamed:@"7"];
     
-    CGSize size = [MagazineRackCell sizeWithImage:image constrainedToHeight:186];
+    CGSize size = [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
     
     return size;
 }
@@ -129,9 +134,9 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 
     UIImage *image = [UIImage imageNamed:@"7"];
     
-    CGSize size =  [MagazineRackCell sizeWithImage:image constrainedToHeight:186];
+    CGSize size =  [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
 
-    return 250 - size.height;
+    return SHELF_HEIGHT - size.height;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

@@ -148,8 +148,8 @@
                                             PSPDFAnnotationTypeStringLine
                                             ]];
         
-        
-        /*
+         /*
+       
          Anotações  possíveis
          
          PSPDFAnnotationTypeStringLink;
@@ -172,7 +172,7 @@
         
         ///// CONFIGURACOES
         
-        pdfController.pageTransition = PSPDFPageCurlTransition;
+//        pdfController.pageTransition = PSPDFPageCurlTransition;
         pdfController.pageMode = PSPDFPageModeAutomatic;
         pdfController.statusBarStyleSetting = PSPDFStatusBarSmartBlackHideOnIpad;
         

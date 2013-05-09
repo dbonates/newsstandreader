@@ -29,7 +29,6 @@
 }
 
 
-
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     
@@ -53,7 +52,7 @@
             NSUInteger intY = curOffset;
             intY -= self.headerReferenceSize.height;
             
-            NSUInteger row = intY / 250;
+            NSUInteger row = intY / SHELF_HEIGHT;
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             
@@ -62,7 +61,7 @@
             
             [attributes addObject:decorationAttributes];
             
-            curOffset += 250.0;
+            curOffset += SHELF_HEIGHT;
         }
     }
     
@@ -72,7 +71,7 @@
             NSUInteger intY = curOffset;
             intY -= self.headerReferenceSize.height;
             
-            NSUInteger row = intY / 250;
+            NSUInteger row = intY / SHELF_HEIGHT;
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             
@@ -81,7 +80,7 @@
             
             [attributes addObject:decorationAttributes];
             
-            curOffset += 250.0;
+            curOffset += SHELF_HEIGHT;
         }
     }
     return attributes;
@@ -109,9 +108,9 @@
     
     if ([decorationViewKind isEqualToString:MagazineRackLayoutShelfDecorationViewKind])
     {
-        CGFloat yOffset = self.headerReferenceSize.height + indexPath.row * 250.0;
+        CGFloat yOffset = self.headerReferenceSize.height + indexPath.row * SHELF_HEIGHT - MAGAZINE_PAD_TOP;
         
-        attributes.frame = CGRectMake(0, yOffset, CGRectGetWidth(self.collectionView.frame), 250.0);
+        attributes.frame = CGRectMake(0, yOffset, CGRectGetWidth(self.collectionView.frame), SHELF_HEIGHT);
         attributes.zIndex = -1;
     }
     

@@ -128,6 +128,8 @@
 #pragma mark - 
 #pragma mark all stuff
 
+
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -156,7 +158,7 @@
         
         [button setTitle:@"Restaurar compras" forState:UIControlStateNormal];
         
-        button.frame = CGRectMake( CGRectGetWidth(self.frame) - 40 - 175, 40, 175, 40);
+        button.frame = CGRectMake( CGRectGetWidth(self.frame) - 40 - 175, MARGEM_TOP, 175, 40);
         
         button.titleLabel.shadowOffset = CGSizeMake(0, 1);
         button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -188,7 +190,7 @@
         [_loginButton setBackgroundImage:normalImage forState:UIControlStateNormal];
         [_loginButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
         
-        _loginButton.frame = CGRectMake( button.frame.origin.x - 30 - 75, 40, 75, 40);
+        _loginButton.frame = CGRectMake( button.frame.origin.x - 30 - 75, MARGEM_TOP, 75, 40);
         _loginButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
         _loginButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         _loginButton.titleLabel.highlightedTextColor = [UIColor whiteColor];
@@ -238,7 +240,7 @@
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:34];
         //[label sizeToFit];
-        label.frame = CGRectMake(30, 35, 500, 50);
+        label.frame = CGRectMake(30, MARGEM_TOP, 500, 50);
         label.backgroundColor = [UIColor clearColor];
         [self addSubview:label];;
         label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
@@ -332,13 +334,13 @@
     }
     else if (width == 1024){
         backgroundImage = [UIImage imageNamed:@"header_landscape"];
-    }
+    }/*
     CGPoint origin = CGPointMake(0, -height * 3);
     CGSize  size = CGSizeMake(self.frame.size.width, height * 3);
     
     _topView.frame = (CGRect){origin,size};
     _topView.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-    
+    */
     _backgroundImageView.image =  backgroundImage;
     
     // configure buttons

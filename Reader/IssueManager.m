@@ -101,6 +101,8 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
 
 - (void)resumeUnfinishedDownloads
 {
+    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
+    
     NSUInteger nkUnfinishedDownloads = 0;
     NKLibrary *library = [NKLibrary sharedLibrary];
     
@@ -120,10 +122,13 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         }
     }
     
+    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
+    
     if (nkUnfinishedDownloads) {
                   NSLog(@"resumed nk downloads");
     }
     else {
+        NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
         NSArray *unfinishedDownloads = [Asset MR_findByAttribute:@"downloaded" withValue:@NO];
 //        if (!unfinishedDownloads.count)
   //          unfinishedDownloads = [Asset MR_findByAttribute:@"downloaded" withValue:nil];
@@ -135,6 +140,8 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             
             NKAssetDownload *assetDownload = [nkIssue addAssetWithRequest:request];
+
+            
             [assetDownload downloadWithDelegate:self];
             NSLog(@"resumed download");
             
@@ -294,17 +301,24 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
 {
     __block Issue *issue = iss;
     NSString *productID = iss.productIdentifier;
+    NSLog(@"Baixar revista com productIdentifier: %@", iss.productIdentifier);
     if (issue.downloadingValue)
+    {
+        NSLog(@"issue.downloadingValue já definido: ");
         return;
+    }
     NSString *baseURL = [RECEIPT_URL stringByAppendingFormat:@"%@&",[NSBundle mainBundle].bundleIdentifier];
+    // NSLog(@"baseURL: %@", baseURL);
+    
     
     if (issue.purchasedValue) {
+        NSLog(@"iissue.purchasedValue");
         NSString *base64Receipt = [issue.receiptData base64Encode];
         
                 
         NSString *requestURLString = [NSString stringWithFormat:@"%@data=%@",baseURL, base64Receipt];
-        
-//        NSLog(@"RECEIPT_URL :: requestURLString: %@", requestURLString);
+        NSLog(@"requestURLString: %@", requestURLString);
+
         
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -324,6 +338,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
     }
     else if ([self.credentialStore isLoggedIn]) // usuario não comprou mas está logado como assinante.
     {
+        NSLog(@"usuário assinante da revista impressa!");
         NSString *printed = @"receipt";
         NSString *requestURLString = [NSString stringWithFormat:@"%@printed=%@&product_identifier=%@",baseURL, printed, productID];
 //        NSLog(@"requestURLString: %@", requestURLString);
@@ -344,6 +359,9 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                                }];
     }
     else if ([InAppStore sharedInstance].subscriptionState == SubscriptionStateSubscribed) {
+        
+        NSLog(@"usuário assinante digital");
+        
         NSString *base64Receipt = [[InAppStore sharedInstance].subscriptionReceiptData base64Encode];
         NSString *requestURLString = [NSString stringWithFormat:@"%@data=%@&product_identifier=%@",baseURL, base64Receipt, issue.productIdentifier];
         NSURL *url = [NSURL URLWithString:requestURLString];
@@ -369,11 +387,12 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                                }];
     }
     else if (issue.freeValue) {
+        NSLog(@"edição grátis!");
         NSString *requestURLString = [NSString stringWithFormat:@"%@product_identifier=%@",baseURL, issue.productIdentifier];
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-       // NSLog(@"2 ***** URL: %@", url);
+        NSLog(@"URL para esta edição: %@", requestURLString);
         
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
@@ -506,6 +525,9 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         NKIssue *nkIssue = [library issueWithName:issue.productIdentifier];
         
         NSString *fileName = [NSString stringWithFormat:@"%@.%@.%d.%@", issue.productIdentifier, asset.type,asset.orderIndex.intValue, destinationURL.pathExtension];
+        
+        NSLog(@"arquivo no download: %@", fileName);
+        
         NSURL *fileURL = [nkIssue.contentURL URLByAppendingPathComponent:fileName];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
