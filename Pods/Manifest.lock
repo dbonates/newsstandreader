@@ -1,0 +1,25 @@
+PODS:
+  - BlocksKit (1.8.2):
+    - libffi
+  - FPPopover (1.4.1)
+  - libffi (3.0.11)
+  - MGBox2 (2.0.0)
+  - PonyDebugger (0.3.0):
+    - SocketRocket
+  - SocketRocket (0.2.0)
+
+DEPENDENCIES:
+  - BlocksKit
+  - FPPopover (~> 1.4.1)
+  - MGBox2 (~> 2.0.0)
+  - PonyDebugger (~> 0.3.0)
+
+SPEC CHECKSUMS:
+  BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
+  FPPopover: 0289b796c031d8f27bd221d93d282ffe23619893
+  libffi: 8a1d9ba43c0c84b546b42c6f742714e73aa07ae1
+  MGBox2: 7c09e36c2271f9af16fdb5141a0ca554ecee4d8d
+  PonyDebugger: 72c2277c30f247390116ae328fe24082e0ed558e
+  SocketRocket: bca43a94bd9aac3a629df42c06843402399ee67b
+
+COCOAPODS: 0.19.1

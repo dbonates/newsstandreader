@@ -326,7 +326,7 @@
     
     UIImage *backgroundImage;
     CGFloat width = CGRectGetWidth(layoutAttributes.frame);
-    CGFloat height = CGRectGetHeight(layoutAttributes.frame);
+//    CGFloat height = CGRectGetHeight(layoutAttributes.frame);
     
     if (width == 768.0){
         backgroundImage = [UIImage imageNamed:@"header"];

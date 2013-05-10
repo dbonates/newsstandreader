@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="FSL-yN-p2s">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="7kZ-1f-xi7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -78,18 +78,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rrl-z5-3he" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-618" y="-1340"/>
+            <point key="canvasLocation" x="356" y="-1340"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="b4a-ZM-piX">
             <objects>
                 <viewController id="FSL-yN-p2s" customClass="RootViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gSr-FJ-bvL">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" id="Ybv-fg-UWd">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
@@ -99,17 +99,39 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Q2l-oI-bS2"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ga9-VI-AOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1572" y="-369"/>
+            <point key="canvasLocation" x="-598" y="-369"/>
+        </scene>
+        <!--OptionsViewController-->
+        <scene sceneID="KX8-ca-QBS">
+            <objects>
+                <viewController storyboardIdentifier="Options" id="aqC-uL-mNv" userLabel="OptionsViewController" customClass="OptionsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="TopLeft" id="hcA-n6-VMY">
+                        <rect key="frame" x="0.0" y="20" width="320" height="240"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="detail_sheet_background.png" id="NUp-ja-Idd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pIM-zo-2XY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="493" y="-59"/>
         </scene>
         <!--Magazine Rack View Controller-->
         <scene sceneID="OYW-nQ-xou">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="7Qk-D0-scn" customClass="MagazineRackViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="CPg-r9-Zqs">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="44" width="768" height="916"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9TA-7U-sRO" customClass="MagazineRackLayout">
                             <size key="itemSize" width="50" height="50"/>
@@ -134,10 +156,11 @@
                             <outlet property="delegate" destination="7Qk-D0-scn" id="Jnz-uO-fEb"/>
                         </connections>
                     </collectionView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3YO-ER-g6T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-86" y="-177"/>
+            <point key="canvasLocation" x="888" y="-177"/>
         </scene>
         <!--Magazine Detail View Controller-->
         <scene sceneID="49j-TP-qh7">
@@ -353,7 +376,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ol-Qq-tgf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="728" y="-395"/>
+            <point key="canvasLocation" x="1702" y="-395"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tKG-vB-9ob">
+            <objects>
+                <navigationController id="7kZ-1f-xi7" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1JJ-IM-WLC">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FSL-yN-p2s" kind="relationship" relationship="rootViewController" id="1DT-MQ-vV0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Avs-7L-9YM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1572" y="-369"/>
         </scene>
     </scenes>
     <resources>
@@ -361,69 +402,6 @@
         <image name="detail_sheet_drawer_shadow.png" width="27" height="276"/>
         <image name="detail_sheet_drawer_shadow_nipple.png" width="27" height="276"/>
     </resources>
-    <classes>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="login:"/>
-                <relationship kind="outlet" name="navController" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="MagazineDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MagazineDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="btnBuyTouched:"/>
-                <relationship kind="action" name="btnDownloadTouched:"/>
-                <relationship kind="action" name="btnPreviewTouched:"/>
-                <relationship kind="action" name="btnSubscribeTouched:"/>
-                <relationship kind="action" name="btnTableTouched:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="buyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="coverImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="detailTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="downloadButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="previewButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="shadowLeftImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shadowNippleImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shadowRightImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="subscribeButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="MagazineRackCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MagazineRackCell.h"/>
-        </class>
-        <class className="MagazineRackLayout" superclassName="UICollectionViewFlowLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MagazineRackLayout.h"/>
-        </class>
-        <class className="MagazineRackViewController" superclassName="UICollectionViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MagazineRackViewController.h"/>
-        </class>
-        <class className="RootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootViewController.h"/>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

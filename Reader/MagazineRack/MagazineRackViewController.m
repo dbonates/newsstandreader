@@ -9,12 +9,12 @@
 #import "MagazineRackViewController.h"
 #import "MagazineRackLayout.h"
 #import "MagazineRackCell.h"
-#import "MagazineRackHeaderView.h"
+//#import "MagazineRackHeaderView.h"
 #import "MagazineRackShelfDecorationView.h"
 #import "IssueManager.h"
 #import "LoginViewController.h"
 
-
+#define MINIMUM_LINE_SPACING 47
 
 @interface MagazineRackViewController ()
 
@@ -23,7 +23,7 @@
 
 @implementation MagazineRackViewController
 
-static NSString *MagazineRackHeaderViewReuseIdentifier = @"MagazineRackHeaderView";
+//static NSString *MagazineRackHeaderViewReuseIdentifier = @"MagazineRackHeaderView";
 static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 
 
@@ -40,9 +40,9 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 {
     [super awakeFromNib];
     
-    [self.collectionView registerClass:[MagazineRackHeaderView class]
-            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:MagazineRackHeaderViewReuseIdentifier];
+//    [self.collectionView registerClass:[MagazineRackHeaderView class]
+//            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+//                   withReuseIdentifier:MagazineRackHeaderViewReuseIdentifier];
     
     MagazineRackLayout *layout = (MagazineRackLayout*)self.collectionView.collectionViewLayout;
     
@@ -53,7 +53,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
         [self configureLayoutForLandscape];
     }
     [layout registerClass:[MagazineRackShelfDecorationView class]
-  forDecorationViewOfKind:MagazineRackLayoutShelfDecorationViewKind];
+  forDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView"];
     
     
 }
@@ -83,7 +83,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 {
     MagazineRackLayout *layout = (MagazineRackLayout*)self.collectionView.collectionViewLayout;
     
-    layout.headerReferenceSize = CGSizeMake(768, HEADER_HEIGHT);
+//    layout.headerReferenceSize = CGSizeMake(768, HEADER_HEIGHT);
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 35.0;
     layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, MARGEM_TOP, MARGEM_DIREITA); // laterais
@@ -94,7 +94,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 {
     MagazineRackLayout *layout = (MagazineRackLayout*)self.collectionView.collectionViewLayout;
     
-    layout.headerReferenceSize = CGSizeMake(1024, HEADER_HEIGHT);
+//    layout.headerReferenceSize = CGSizeMake(1024, HEADER_HEIGHT);
     layout.minimumLineSpacing = 50;
     layout.minimumInteritemSpacing = 35.0;
     layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, SHELF_HEIGHT-COVER_HEIGHT_CONSTRAIN, MARGEM_DIREITA); // laterais
@@ -125,24 +125,24 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     UIImage *image = [UIImage imageNamed:@"7"];
     
     CGSize size = [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
-    
+    dLOG(@"%@", NSStringFromCGSize(size));
     return size;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
 
-    UIImage *image = [UIImage imageNamed:@"7"];
+ //   UIImage *image = [UIImage imageNamed:@"7"];
     
-    CGSize size =  [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
-
-    return SHELF_HEIGHT - size.height;
+//    CGSize size =  [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
+    return MINIMUM_LINE_SPACING;
+//    return SHELF_HEIGHT - size.height;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger count = self.fetchedResultsController.fetchedObjects.count;
-    NSLog(@"count %d", count);
+//    NSLog(@"count %d", count);
     return count;
 }
 
@@ -158,15 +158,15 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 
 
 // The view that is returned must be retrieved from a call to -dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    MagazineRackHeaderView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                                 withReuseIdentifier:MagazineRackHeaderViewReuseIdentifier
-                                                                                        forIndexPath:indexPath];
-
-    headerView.parentViewController = self;
-    return headerView;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+//{
+//    MagazineRackHeaderView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+//                                                                                 withReuseIdentifier:MagazineRackHeaderViewReuseIdentifier
+//                                                                                        forIndexPath:indexPath];
+//
+//    headerView.parentViewController = self;
+//    return headerView;
+//}
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {

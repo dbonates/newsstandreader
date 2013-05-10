@@ -32,12 +32,12 @@
 
 // UICollectionView Layout
 
-#define HEADER_HEIGHT 100
+//#define HEADER_HEIGHT 100
 #define COVER_HEIGHT_CONSTRAIN 186
 #define MARGEM_ESQUERDA 80
 #define MARGEM_DIREITA 80
-#define MARGEM_TOP 20
-#define SHELF_HEIGHT 250.0
+#define MARGEM_TOP 0
+#define SHELF_HEIGHT 157.0
 #define MAGAZINE_PAD_TOP 10
 
 #ifdef __OBJC__
@@ -47,3 +47,7 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
 #endif
+
+#import "DBmacros.h"
+
+# define isPad UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad

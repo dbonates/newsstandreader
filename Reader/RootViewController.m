@@ -10,11 +10,15 @@
 #import "IssueManager.h"
 #import "ReaderViewController.h"
 #import "MBProgressHUD.h"
-#include <PSPDFKit/PSPDFKit.h> 
+#include <PSPDFKit/PSPDFKit.h>
+#import "Navbar+Shadow.h"
+#import "UIBarButtonItem+BlocksKit.h"
+#import "OptionsViewController.h"
+
+#define OPTIONS_SIZE CGSizeMake(320,240)
 
 @interface RootViewController ()<ReaderViewControllerDelegate>
-
-
+@property (nonatomic, strong) FPPopoverController *popover;
 @end
 
 @implementation RootViewController{
@@ -36,6 +40,60 @@
 {
     [super viewDidLoad];
 //    NSLog(@"view did load");
+    
+    
+    /**************** START OF NAVBAR CONFIG **************/
+    
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    
+    // condicionais iPhone / iPad
+    UIImage *woodBg = isPad ? [UIImage imageNamed:@"NavBar-iPad"] : [UIImage imageNamed:@"NavBar-iPhone"];
+    [navBar setBackgroundImage:woodBg forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.600 green:0.400 blue:0.200 alpha:0.550];
+    
+    
+    
+    UIImage* buttonImage =[UIImage imageNamed:@"TSA_GearIcon"];
+    
+    
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
+                                       initWithImage:buttonImage style:UIBarButtonItemStylePlain handler:^(id sender) {
+                                           UIBarButtonItem *buttonItem = sender;
+                                           UIView* btnView = [buttonItem valueForKey:@"view"];
+                                           //On these cases is better to specify the arrow direction
+                                           
+
+                                           UIStoryboard *sb = self.storyboard;
+                                           
+                                           OptionsViewController *optionsViewController = (OptionsViewController *)[sb instantiateViewControllerWithIdentifier:@"Options"];
+                                           
+                                           self.popover = [[FPPopoverController alloc] initWithViewController:optionsViewController];
+//                                           self.popover.border = NO;
+                                           self.popover.contentSize = OPTIONS_SIZE;
+                                           [self.popover setArrowDirection:FPPopoverArrowDirectionUp];
+                                           [self.popover presentPopoverFromView:btnView];
+                                       }];
+    
+    self.navigationItem.rightBarButtonItem = settingsButton;
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:0.508 green:0.250 blue:0.062 alpha:1.000]; // change this color
+    self.navigationItem.titleView = label;
+    label.text =@"Panorama da Aquicultura";
+    [label sizeToFit];
+    
+    
+    /**************** END OF NAVBAR CONFIG **************/
+    
+    
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self

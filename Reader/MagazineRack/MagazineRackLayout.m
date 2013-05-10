@@ -16,7 +16,7 @@
     self = [super initWithCoder:aDecoder];
     
     if (self){
-        
+        self.headerReferenceSize = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad? (CGSize){30, 30} : (CGSize){23, 23}; // 100
     }
     
     return self;
@@ -26,6 +26,9 @@
 - (void)prepareLayout
 {
     [super prepareLayout];
+    
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wood Tile"]];
+//    self.minimumLineSpacing = 145;
 }
 
 
@@ -56,8 +59,7 @@
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             
-            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:MagazineRackLayoutShelfDecorationViewKind
-                                                                                             atIndexPath:indexPath];
+            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView" atIndexPath:indexPath];
             
             [attributes addObject:decorationAttributes];
             
@@ -75,8 +77,7 @@
             
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             
-            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:MagazineRackLayoutShelfDecorationViewKind
-                                                                                                       atIndexPath:indexPath];
+            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView" atIndexPath:indexPath];
             
             [attributes addObject:decorationAttributes];
             
@@ -86,6 +87,7 @@
     return attributes;
     
 }
+
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -106,9 +108,23 @@
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind
                                                                                                                withIndexPath:indexPath];
     
-    if ([decorationViewKind isEqualToString:MagazineRackLayoutShelfDecorationViewKind])
+    
+    
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    int topGap = 60;
+    
+    if (currentOrientation == UIInterfaceOrientationLandscapeLeft
+        || currentOrientation == UIInterfaceOrientationLandscapeRight) {
+        topGap = 70;
+    }
+    
+    
+    
+    if ([decorationViewKind isEqualToString:@"MagazineRackLayoutShelfDecorationView"])
     {
-        CGFloat yOffset = self.headerReferenceSize.height + indexPath.row * SHELF_HEIGHT - MAGAZINE_PAD_TOP;
+        //CGFloat yOffset = self.headerReferenceSize.height + (indexPath.row * SHELF_HEIGHT - MAGAZINE_PAD_TOP)+topGap*4;
+        CGFloat yOffset = 140 + (indexPath.row * (SHELF_HEIGHT+86));
         
         attributes.frame = CGRectMake(0, yOffset, CGRectGetWidth(self.collectionView.frame), SHELF_HEIGHT);
         attributes.zIndex = -1;

@@ -14,7 +14,7 @@
 #import "JSONKit.h"
 #import "NSData+Base64.h"
 #import "CredentialStore.h"
-
+#import "PonyDebugger.h"
 
 @implementation AppDelegate
 
@@ -51,6 +51,18 @@ BOOL printSubscriber;
 
     
     [MagicalRecord setupCoreDataStack];
+    
+    /*
+      Pony DEBUG: #import "PonyDebugger.h"
+     */
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+    [debugger enableNetworkTrafficDebugging];
+    [debugger enableCoreDataDebugging];
+    [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    [debugger forwardAllNetworkTraffic];
+    [debugger enableViewHierarchyDebugging];
+    
 
     [[IssueManager sharedInstance] update];
 
@@ -62,7 +74,7 @@ BOOL printSubscriber;
 //    [[NSUserDefaults standardUserDefaults] synchronize];
 #ifdef DEBUG
     // For debugging - allow multiple pushes per day
-    NSLog(@"yes, debugging...");
+//    NSLog(@"yes, debugging...");
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 #endif
@@ -72,6 +84,9 @@ BOOL printSubscriber;
     
     NSLog(@"launch options %@", [launchOptions JSONString]);
     [self letServerKnowAboutPushTokenIfNeeded];
+    
+    
+    
 
     return YES;
 }

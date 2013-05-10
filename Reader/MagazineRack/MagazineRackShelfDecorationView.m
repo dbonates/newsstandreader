@@ -7,6 +7,7 @@
 //
 
 #import "MagazineRackShelfDecorationView.h"
+#import <QuartzCore/CALayer.h>
 
 @implementation MagazineRackShelfDecorationView
 {
@@ -49,13 +50,16 @@
     
     UIImage *shelfImage;
     if (CGRectGetWidth(layoutAttributes.frame) == 768.0){
-        shelfImage = [UIImage imageNamed:@"shelf"];
+        shelfImage = [UIImage imageNamed:@"Shelf-iPad"];
     }
     else if (CGRectGetWidth(layoutAttributes.frame) == 1024.0){
-        shelfImage = [UIImage imageNamed:@"shelf_landscape"];
+        shelfImage = [UIImage imageNamed:@"Shelf-iPad-Landscape"];
     }
     
     _shelfImageView.image = shelfImage;
+    
+    _shelfImageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    _shelfImageView.layer.shouldRasterize = YES;
 }
 
 

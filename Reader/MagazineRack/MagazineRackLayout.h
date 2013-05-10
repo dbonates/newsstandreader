@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *MagazineRackLayoutShelfDecorationViewKind = @"MagazineRackLayoutShelfDecorationView";
 @interface MagazineRackLayout : UICollectionViewFlowLayout
 
 @end

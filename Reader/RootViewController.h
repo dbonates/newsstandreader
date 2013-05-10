@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "MagazineRackViewController.h"
 #import "MagazineDetailViewController.h"
+#import "FPPopoverController.h"
 
-@interface RootViewController : UIViewController
+
+@interface RootViewController : UIViewController <FPPopoverControllerDelegate>
 @property (strong, nonatomic) MagazineRackViewController *magazineRackViewController;
 @property (strong, nonatomic) MagazineDetailViewController *magazineDetailViewController;
 
