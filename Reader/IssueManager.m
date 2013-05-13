@@ -532,15 +532,22 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         
+//        if ([fileManager fileExistsAtPath:fileURL.path]) {
+//            [fileManager removeItemAtPath:fileURL.path error:nil];
+//        }
+        
         BOOL moved;
         NSError *error = nil;
         moved = [fileManager moveItemAtURL:destinationURL toURL:fileURL error:&error];
+        
         if (moved) {
+            sLOG(@"MOVED: %@", fileURL);
             asset.downloaded = @YES;
             asset.filePath = fileURL.path;
         }
         else {
-            NSLog(@"this really shouldn't have happened %@", error);
+            dLOG(@"ERRO AO MOVER: %@", error.description);
+//            NSLog(@"this really shouldn't have happened %@", error);
             asset.downloaded = @YES;
             asset.filePath = fileURL.path;
         }

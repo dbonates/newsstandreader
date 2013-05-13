@@ -1,161 +1,186 @@
 //
-//  MagazineRackLayout.m
-//  Reader
+//  RevistasLayout.m
+//  Teste
 //
-//  Created by  Basispress on 12/18/12.
-//  Copyright (c) 2012 Basispress. All rights reserved.
+//  Created by Daniel Bonates on 5/3/13.
+//  Copyright (c) 2013 Daniel Bonates. All rights reserved.
 //
 
 #import "MagazineRackLayout.h"
+#import "MagazineRackShelfDecorationView.h"
+//#import "SimpleShelf.h"
+#import "MagazineRackViewController.h"
+// [layout registerClass:NSClassFromString(self.uiCollectionReusableViewClassName) forDecorationViewOfKind:@"SimpleShelf"];
 
+#define MARGIN_TOP 30
+#define MARGIN_BOTTOM 30
+#define LINE_SPACING 65
+#define SHELF_Y 145.0
+#define SHELF_HEIGHT 157.0
+#define MARGIN_LATERAL 80
+
+
+@interface MagazineRackLayout()
+
+@property (nonatomic) CGSize itemSize;
+@property (nonatomic) NSInteger minimunGapBetweenItems;
+@property (nonatomic) NSInteger itemsCount;
+@property (nonatomic) NSString *uiCollectionReusableViewClassName;
+@property (nonatomic, strong) MagazineRackViewController *selfCollectionView;
+@property (nonatomic, strong) NSDictionary *shelfRects;
+@end
 
 @implementation MagazineRackLayout
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)init
 {
-    self = [super initWithCoder:aDecoder];
-    
-    if (self){
-        self.headerReferenceSize = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad? (CGSize){30, 30} : (CGSize){23, 23}; // 100
+    self = [super init];
+    if (self) {
+        [self registerClass:NSClassFromString(@"MagazineRackShelfDecorationView") forDecorationViewOfKind:@"MagazineRackShelfDecorationView"];
+       // [self registerClass:[MagazineRackShelfDecorationView class]
+         //forDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView"];
     }
     
     return self;
 }
 
 
+- (void)setupWithItemSize:(CGSize)itemSize minimunGapBetweenItems:(NSInteger)minimunGapBetweenItems uiCollectionReusableViewClassName:(NSString *)uiCollectionReusableViewClassName
+{
+    /*
+     
+     Editar se for inserir uma header!
+     
+     */
+    self.headerReferenceSize = CGSizeMake(0, 0); //[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad? (CGSize){50, 50} : (CGSize){43, 43}; // 100
+
+    self.itemSize = itemSize;
+    self.minimunGapBetweenItems = minimunGapBetweenItems;
+    self.uiCollectionReusableViewClassName = @"SimpleShelf";
+    self.itemsCount = 4; // ignorable in for it will be overwritted by prepareForLayout
+    
+}
+
 - (void)prepareLayout
 {
+    // call super so flow layout can do all the math for cells, headers, and footers
     [super prepareLayout];
     
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wood Tile"]];
-//    self.minimumLineSpacing = 145;
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern5"]];
+    _selfCollectionView = (MagazineRackViewController *)self.collectionView;
+
+    self.itemSize = CGSizeMake(self.itemSize.width, self.itemSize.height);
+    
+//    float windowWidth = self.collectionView.bounds.size.width;
+   
+//    NSInteger itensOnColumn = windowWidth/self.itemSize.width;
+//    wLOG(@"itensOnColumn: %d", itensOnColumn);
+//    wLOG(@"self.itemsCount: %d", self.itemsCount);
+
+    float lateralMarginInsect = MARGIN_LATERAL;
+    float spaceBetweenItems = self.minimunGapBetweenItems;
+    
+    self.sectionInset = UIEdgeInsetsMake(MARGIN_TOP, lateralMarginInsect, MARGIN_BOTTOM, lateralMarginInsect);
+    self.minimumLineSpacing = LINE_SPACING;
+    self.minimumInteritemSpacing = spaceBetweenItems;
+    
+//    return;
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    if (self.scrollDirection == UICollectionViewScrollDirectionVertical)
+    {
+        // Calculate where shelves go in a vertical layout
+        int sectionCount = [self.collectionView numberOfSections];
+        
+        CGFloat y = 0;
+        CGFloat availableWidth = self.collectionViewContentSize.width - (self.sectionInset.left + self.sectionInset.right);
+        int itemsAcross = floorf((availableWidth + self.minimumInteritemSpacing) / (self.itemSize.width + self.minimumInteritemSpacing));
+        
+        for (int section = 0; section < sectionCount; section++)
+        {
+            y += self.headerReferenceSize.height;
+            y += self.sectionInset.top+24;
+            
+            int itemCount = [self.collectionView numberOfItemsInSection:section];
+            iLOG(@"self.headerReferenceSize.height: %f", self.headerReferenceSize.height);
+            int rows = ceilf(itemCount/(float)itemsAcross);
+            for (int row = 0; row < rows; row++)
+            {
+                y += self.itemSize.height;
+                dictionary[[NSIndexPath indexPathForItem:row inSection:section]] = [NSValue valueWithCGRect:CGRectMake(0, y-110, self.collectionViewContentSize.width, SHELF_HEIGHT)];
+                
+                if (row < rows - 1)
+                    y += self.minimumLineSpacing;
+            }
+            
+            y += self.sectionInset.bottom;
+            y += self.footerReferenceSize.height;
+        }
+    }
+    else
+    {
+        // Calculate where shelves go in a horizontal layout
+        CGFloat y = self.sectionInset.top;
+        CGFloat availableHeight = self.collectionViewContentSize.height - (self.sectionInset.top + self.sectionInset.bottom);
+        int itemsAcross = floorf((availableHeight + self.minimumInteritemSpacing) / (self.itemSize.height + self.minimumInteritemSpacing));
+        CGFloat interval = ((availableHeight - self.itemSize.height) / (itemsAcross <= 1? 1 : itemsAcross - 1)) - self.itemSize.height;
+        for (int row = 0; row < itemsAcross; row++)
+        {
+
+            y += self.itemSize.height;
+            dictionary[[NSIndexPath indexPathForItem:row inSection:0]] = [NSValue valueWithCGRect:CGRectMake(0, y-110, self.collectionViewContentSize.width, SHELF_HEIGHT)];
+            
+            y += interval;
+        }
+    }
+    
+    self.shelfRects = [NSDictionary dictionaryWithDictionary:dictionary];
+    
+    
 }
 
-
+// Return attributes of all items (cells, supplementary views, decoration views) that appear within this rect
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
+    // call super so flow layout can return default attributes for all cells, headers, and footers
+    NSArray *array = [super layoutAttributesForElementsInRect:rect];
     
-    NSArray *superAttributes = [super layoutAttributesForElementsInRect:rect];
+    // Add our decoration views (shelves)
+    NSMutableArray *newArray = [array mutableCopy];
     
-    NSMutableArray *attributes = [NSMutableArray arrayWithCapacity:0];
-    
-    for (UICollectionViewLayoutAttributes *attribute in superAttributes) {
-        if (attribute.frame.origin.x + attribute.frame.size.width <= self.collectionViewContentSize.width) {
-            [attributes addObject:attribute];
-            
-            if(attribute.representedElementCategory != UICollectionElementCategoryCell &&[attribute.representedElementKind isEqualToString:UICollectionElementKindSectionHeader])
-                attribute.zIndex = -1;
+    [self.shelfRects enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (CGRectIntersectsRect([obj CGRectValue], rect))
+        {
+            UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:@"MagazineRackShelfDecorationView" withIndexPath:key];
+            attributes.frame = [obj CGRectValue];
+            attributes.zIndex = -1;
+            //attributes.alpha = 0.5; // screenshots
+            [newArray addObject:attributes];
         }
-    }
-    CGFloat yOffset = CGRectGetMinY(rect);
-    CGFloat curOffset = yOffset;
+    }];
     
-    if (curOffset >=0){
-        while(curOffset <= CGRectGetMaxY(rect)){
-            NSUInteger intY = curOffset;
-            intY -= self.headerReferenceSize.height;
-            
-            NSUInteger row = intY / SHELF_HEIGHT;
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            
-            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView" atIndexPath:indexPath];
-            
-            [attributes addObject:decorationAttributes];
-            
-            curOffset += SHELF_HEIGHT;
-        }
-    }
+    array = [NSArray arrayWithArray:newArray];
     
-    if (curOffset >=self.collectionView.contentSize.height){
-        for(NSUInteger index = 0; index < 4; index ++){
-        
-            NSUInteger intY = curOffset;
-            intY -= self.headerReferenceSize.height;
-            
-            NSUInteger row = intY / SHELF_HEIGHT;
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            
-            UICollectionViewLayoutAttributes *decorationAttributes = [self layoutAttributesForDecorationViewOfKind:@"MagazineRackLayoutShelfDecorationView" atIndexPath:indexPath];
-            
-            [attributes addObject:decorationAttributes];
-            
-            curOffset += SHELF_HEIGHT;
-        }
-    }
-    return attributes;
-    
+    return array;
 }
 
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+// layout attributes for a specific decoration view
+- (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewLayoutAttributes *superAttributes = [super layoutAttributesForItemAtIndexPath:indexPath];
+    id shelfRect = self.shelfRects[indexPath];
+    if (!shelfRect)
+        return nil; // no shelf at this index (this is probably an error)
     
-    return superAttributes;
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewLayoutAttributes *superAttributes = [super layoutAttributesForSupplementaryViewOfKind:kind
-                                                                                              atIndexPath:indexPath];
-    
-    return superAttributes;
-}
-- (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind
-                                                                                                               withIndexPath:indexPath];
-    
-    
-    
-    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    
-    int topGap = 60;
-    
-    if (currentOrientation == UIInterfaceOrientationLandscapeLeft
-        || currentOrientation == UIInterfaceOrientationLandscapeRight) {
-        topGap = 70;
-    }
-    
-    
-    
-    if ([decorationViewKind isEqualToString:@"MagazineRackLayoutShelfDecorationView"])
-    {
-        //CGFloat yOffset = self.headerReferenceSize.height + (indexPath.row * SHELF_HEIGHT - MAGAZINE_PAD_TOP)+topGap*4;
-        CGFloat yOffset = 140 + (indexPath.row * (SHELF_HEIGHT+86));
-        
-        attributes.frame = CGRectMake(0, yOffset, CGRectGetWidth(self.collectionView.frame), SHELF_HEIGHT);
-        attributes.zIndex = -1;
-    }
+    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:@"MagazineRackShelfDecorationView" withIndexPath:indexPath];
+    attributes.frame = [shelfRect CGRectValue];
+    attributes.zIndex = 0; // shelves go behind other views
     
     return attributes;
 }
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
-{
-    BOOL superShouldInvalidate = [super shouldInvalidateLayoutForBoundsChange:newBounds];
-    
-    return superShouldInvalidate;
-}
-- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
-{
-    CGPoint superTargetContentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset
-                                                                    withScrollingVelocity:velocity];
-    
-    return superTargetContentOffset;
-}
 
-- (CGSize)collectionViewContentSize
-{
-    CGSize superSize = [super collectionViewContentSize];
-    if (superSize.height < CGRectGetHeight(self.collectionView.bounds))
-    {
-        superSize = self.collectionView.bounds.size;
-        superSize.height += 1.0;
-    }
-    return superSize;
-}
+
+
 
 
 @end
