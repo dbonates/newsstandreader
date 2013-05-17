@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @interface MagazineRackLayout : UICollectionViewFlowLayout
-- (void)setupWithItemSize:(CGSize)itemSize minimunGapBetweenItems:(NSInteger)minimunGapBetweenItems uiCollectionReusableViewClassName:(NSString *)uiCollectionReusableViewClassName;
+
 @end

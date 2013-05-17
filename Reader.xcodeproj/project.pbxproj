@@ -36,10 +36,6 @@
 		3722D86F173C22D300A0B84D /* Wood Tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3722D84F173C22D300A0B84D /* Wood Tile.png */; };
 		3767A21B171FA0B2000D04DB /* TODO.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3767A21A171FA0B2000D04DB /* TODO.rtf */; };
 		37783C421721122500B38140 /* PSPDFKit.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37783C401721122500B38140 /* PSPDFKit.strings */; };
-		3782C8B1173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.m in Sources */ = {isa = PBXBuildFile; fileRef = 3782C8B0173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.m */; };
-		3782C8BC173FF70A00F1EA55 /* SimpleShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = 3782C8BB173FF70A00F1EA55 /* SimpleShelf.m */; };
-		3782C8C217415C2500F1EA55 /* BasicReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3782C8C117415C2500F1EA55 /* BasicReusableView.m */; };
-		3782C8C7174193CF00F1EA55 /* SimpleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3782C8C6174193CF00F1EA55 /* SimpleCell.m */; };
 		37938FBB173CA30100EE6DF0 /* Shelf-iPad-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 37938FB3173CA30000EE6DF0 /* Shelf-iPad-Landscape.png */; };
 		37938FBC173CA30100EE6DF0 /* Shelf-iPad-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37938FB4173CA30000EE6DF0 /* Shelf-iPad-Landscape@2x.png */; };
 		37938FBD173CA30100EE6DF0 /* Shelf-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 37938FB5173CA30100EE6DF0 /* Shelf-iPad.png */; };
@@ -261,14 +257,6 @@
 		3722D84F173C22D300A0B84D /* Wood Tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wood Tile.png"; sourceTree = "<group>"; };
 		3767A21A171FA0B2000D04DB /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		37783C411721122500B38140 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = PSPDFKit.strings; sourceTree = "<group>"; };
-		3782C8AF173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImage_DBImageBlender.h"; sourceTree = "<group>"; };
-		3782C8B0173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImage_DBImageBlender.m"; sourceTree = "<group>"; };
-		3782C8BA173FF70900F1EA55 /* SimpleShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShelf.h; sourceTree = "<group>"; };
-		3782C8BB173FF70A00F1EA55 /* SimpleShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleShelf.m; sourceTree = "<group>"; };
-		3782C8C017415C2500F1EA55 /* BasicReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicReusableView.h; path = ../CodeLib/CollectionViewBasic/BasicReusableView.h; sourceTree = "<group>"; };
-		3782C8C117415C2500F1EA55 /* BasicReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicReusableView.m; path = ../CodeLib/CollectionViewBasic/BasicReusableView.m; sourceTree = "<group>"; };
-		3782C8C5174193CE00F1EA55 /* SimpleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleCell.h; sourceTree = "<group>"; };
-		3782C8C6174193CF00F1EA55 /* SimpleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleCell.m; sourceTree = "<group>"; };
 		37938FB3173CA30000EE6DF0 /* Shelf-iPad-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shelf-iPad-Landscape.png"; sourceTree = "<group>"; };
 		37938FB4173CA30000EE6DF0 /* Shelf-iPad-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shelf-iPad-Landscape@2x.png"; sourceTree = "<group>"; };
 		37938FB5173CA30100EE6DF0 /* Shelf-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shelf-iPad.png"; sourceTree = "<group>"; };
@@ -594,7 +582,7 @@
 				3722D82E173C222D00A0B84D /* DBmacros.h */,
 			);
 			name = DBmacros;
-			path = ../CodeLib/DBmacros;
+			path = ../../CodeLib/DBmacros;
 			sourceTree = "<group>";
 		};
 		3722D82F173C22B700A0B84D /* Wood */ = {
@@ -649,27 +637,6 @@
 				37783C401721122500B38140 /* PSPDFKit.strings */,
 			);
 			path = pt.lproj;
-			sourceTree = "<group>";
-		};
-		3782C8AE173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender */ = {
-			isa = PBXGroup;
-			children = (
-				3782C8AF173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.h */,
-				3782C8B0173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.m */,
-			);
-			name = "UIImage+UIImage_DBImageBlender";
-			path = "../CodeLib/UIImage+UIImage_DBImageBlender";
-			sourceTree = "<group>";
-		};
-		3782C8B9173FEC6700F1EA55 /* LIB */ = {
-			isa = PBXGroup;
-			children = (
-				3782C8C017415C2500F1EA55 /* BasicReusableView.h */,
-				3782C8C117415C2500F1EA55 /* BasicReusableView.m */,
-				3722D82D173C222D00A0B84D /* DBmacros */,
-				3782C8AE173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender */,
-			);
-			name = LIB;
 			sourceTree = "<group>";
 		};
 		37938FB2173CA14B00EE6DF0 /* Shelf */ = {
@@ -845,7 +812,6 @@
 		D0A90EB1168169D100681996 = {
 			isa = PBXGroup;
 			children = (
-				3782C8B9173FEC6700F1EA55 /* LIB */,
 				3767A21A171FA0B2000D04DB /* TODO.rtf */,
 				3722D828173C1DD200A0B84D /* NavBar+Shadow */,
 				3797B4D4171DF80600973926 /* Login */,
@@ -894,8 +860,8 @@
 		D0A90EC6168169D100681996 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				3722D82D173C222D00A0B84D /* DBmacros */,
 				F9F0047716E1142D0075200B /* Storyboard.storyboard */,
-				D0A90EF516816C3600681996 /* MagazineRack */,
 				D0B4A2F41692472500BDA88E /* External */,
 				D0B4A2E2169246F900BDA88E /* Model */,
 				D0CD12E9169B4DAF00F171D0 /* StoreKit Stuff */,
@@ -911,6 +877,7 @@
 				D0E92D9A1683EAA10051FCAD /* MagazineRackRenderer.m */,
 				D0E92DD116841DCE0051FCAD /* MagazineDetailViewController.h */,
 				D0E92DD216841DCE0051FCAD /* MagazineDetailViewController.m */,
+				D0A90EF516816C3600681996 /* MagazineRack */,
 				D0A90EE516816BA200681996 /* Graphics */,
 				D0A90EC7168169D100681996 /* Supporting Files */,
 				D0A90EF616816FF100681996 /* Reader.xcdatamodeld */,
@@ -994,8 +961,6 @@
 			children = (
 				F95EB6B316BB24D10087D640 /* MagazineRackCell.h */,
 				F95EB6B416BB24D10087D640 /* MagazineRackCell.m */,
-				3782C8C5174193CE00F1EA55 /* SimpleCell.h */,
-				3782C8C6174193CF00F1EA55 /* SimpleCell.m */,
 				F95EB6B516BB24D10087D640 /* MagazineRackFooterView.h */,
 				F95EB6B616BB24D10087D640 /* MagazineRackFooterView.m */,
 				F95EB6B716BB24D10087D640 /* MagazineRackHeaderView.h */,
@@ -1004,8 +969,6 @@
 				F95EB6BA16BB24D10087D640 /* MagazineRackLayout.m */,
 				F95EB6BB16BB24D10087D640 /* MagazineRackShelfDecorationView.h */,
 				F95EB6BC16BB24D10087D640 /* MagazineRackShelfDecorationView.m */,
-				3782C8BA173FF70900F1EA55 /* SimpleShelf.h */,
-				3782C8BB173FF70A00F1EA55 /* SimpleShelf.m */,
 				F95EB6BD16BB24D10087D640 /* MagazineRackViewController.h */,
 				F95EB6BE16BB24D10087D640 /* MagazineRackViewController.m */,
 			);
@@ -1473,10 +1436,6 @@
 				3797B50C171E094A00973926 /* CredentialStore.m in Sources */,
 				3797B50D171E094D00973926 /* AuthAPIClient.m in Sources */,
 				3722D82C173C21A900A0B84D /* OptionsViewController.m in Sources */,
-				3782C8B1173FE04200F1EA55 /* UIImage+UIImage_DBImageBlender.m in Sources */,
-				3782C8BC173FF70A00F1EA55 /* SimpleShelf.m in Sources */,
-				3782C8C217415C2500F1EA55 /* BasicReusableView.m in Sources */,
-				3782C8C7174193CF00F1EA55 /* SimpleCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

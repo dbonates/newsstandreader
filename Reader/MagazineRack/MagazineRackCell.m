@@ -29,6 +29,7 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
         self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
         [self.progressView sizeThatFits:self.frame.size];
@@ -42,8 +43,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    dLOG(@"inicializando cell");
-
+    
     [self.progressView sizeThatFits:self.frame.size];
     self.progressView.frame = CGRectInset(self.progressView.frame, 15, 0);
     self.progressView.center = CGPointMake(self.center.x, CGRectGetHeight(self.frame) - CGRectGetHeight(self.progressView.frame) - 15);
