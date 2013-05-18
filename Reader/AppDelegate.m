@@ -14,7 +14,7 @@
 #import "JSONKit.h"
 #import "NSData+Base64.h"
 #import "CredentialStore.h"
-#import "PonyDebugger.h"
+//#import "PonyDebugger.h"
 
 @implementation AppDelegate
 
@@ -54,7 +54,7 @@ BOOL printSubscriber;
     
     /*
       Pony DEBUG: #import "PonyDebugger.h"
-     */
+   
     PDDebugger *debugger = [PDDebugger defaultInstance];
     [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     [debugger enableNetworkTrafficDebugging];
@@ -62,7 +62,7 @@ BOOL printSubscriber;
     [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]];
     [debugger forwardAllNetworkTraffic];
     [debugger enableViewHierarchyDebugging];
-    
+      */
 
     [[IssueManager sharedInstance] update];
 

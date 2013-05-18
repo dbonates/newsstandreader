@@ -10,7 +10,6 @@
 
 @interface CredentialStore : NSObject
 
-
 - (BOOL)isLoggedIn;
 - (void)clearSavedCredentials;
 - (NSString *)authToken;

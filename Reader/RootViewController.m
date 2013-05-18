@@ -15,10 +15,22 @@
 #import "UIBarButtonItem+BlocksKit.h"
 #import "OptionsViewController.h"
 
+// adicionado
+#import "CredentialStore.h"
+#import "LoginViewController.h"
+#import "AuthAPIClient.h"
+#import "SVProgressHUD.h"
+#import "InAppStore.h"
+
 #define OPTIONS_SIZE CGSizeMake(320,240)
+#define LOGIN_WINSIZE CGSizeMake(340,280)
+#define DEFAULT_TINT [UIColor colorWithRed:0.600 green:0.400 blue:0.200 alpha:0.550]
+#define SECONDARY_TINT [UIColor colorWithRed:0.124 green:0.139 blue:0.198 alpha:1.000]
 
 @interface RootViewController ()<ReaderViewControllerDelegate>
 @property (nonatomic, strong) FPPopoverController *popover;
+@property (nonatomic, strong) FPPopoverController *assinanteLoginPopover;
+@property (nonatomic, strong) UIBarButtonItem *assinanteButton;
 @end
 
 @implementation RootViewController{
@@ -26,6 +38,145 @@
     UITapGestureRecognizer *tapGestureRecognizer;
     MBProgressHUD *hud;
 }
+
+
+
+#pragma mark -
+#pragma mark all login stuff
+
+- (IBAction)getThere:(id)sender {
+    if ([self.credentialStore isLoggedIn])
+    {
+        
+        if ([self.assinanteButton.title isEqualToString:@"Sair"]) {
+            NSLog(@"apenas sair...");
+            [self.credentialStore clearSavedCredentials];
+            
+            return;
+        }
+        
+        //NSLog(@"token a provar: %@", self.credentialStore.authToken);
+        [SVProgressHUD show];
+        
+        
+        [[AuthAPIClient sharedClient] getPath:@"/home/index"
+                                   parameters:@{@"auth_toke": @"edae859ddd7e7de19e41c804290e44b97ac6b775"}
+                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                          //                                          NSLog(@"passou com o token %@",self.credentialStore.authToken);
+                                          
+                                          //NSDictionary *jsonPeople = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                                          //self.logText.text = [jsonPeople description];
+                                          [SVProgressHUD dismiss];
+                                      }
+                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                          //                                          NSLog(@"erro, limpar token %@", self.credentialStore.authToken);
+                                          //                                          NSLog(@"erro: %@", [self getValueForKeyFromJsonObject:@"error" jsonObject:operation.responseData]);
+                                          
+                                          if (operation.response.statusCode == 403 || operation.response.statusCode == 401) { // Forbidden, token expirou
+                                              [self.credentialStore clearSavedCredentials];
+                                              
+                                              
+                                          }
+                                          // a api retorna um json com uma key "error"
+                                          NSString *errorMsg = [self getValueForKeyFromJsonObject:@"error" jsonObject:operation.responseData];
+                                          [SVProgressHUD showErrorWithStatus:errorMsg];
+                                      }];
+        
+        
+    }
+    else
+    {
+        
+        UIBarButtonItem *buttonItem = sender;
+        UIView* btnView = [buttonItem valueForKey:@"view"];
+        
+        UIStoryboard *sb = self.parentViewController.storyboard;
+        LoginViewController *loginWViewController = (LoginViewController *)[sb instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        
+        
+        self.assinanteLoginPopover = [[FPPopoverController alloc] initWithViewController:loginWViewController];
+        //                                           self.popover.border = NO;
+        self.assinanteLoginPopover.contentSize = LOGIN_WINSIZE;
+        [self.assinanteLoginPopover setArrowDirection:FPPopoverArrowDirectionUp];
+        [self.assinanteLoginPopover presentPopoverFromView:btnView];
+        
+    }
+}
+
+
+
+- (void)tokenSaved:(NSNotification *)notification
+{
+    
+    [self.assinanteLoginPopover dismissPopoverAnimated:YES completion:^{
+        
+        //[self.assinanteButton setTitle:@"Sair"];
+        
+        self.navigationItem.leftBarButtonItem = nil;
+        
+        // Get the reference to the current toolbar buttons
+        NSMutableArray *toolbarButtons = [self.toolbarItems mutableCopy];
+        
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont boldSystemFontOfSize:14.0];
+        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithRed:0.508 green:0.250 blue:0.062 alpha:1.000]; // change this color
+        self.navigationItem.titleView = label;
+        label.text =@"Panorama da Aquicultura";
+        [label sizeToFit];
+        
+        
+        [toolbarButtons addObject:label];
+        
+        // This is how you remove the button from the toolbar and animate it
+        [toolbarButtons removeObject:self.assinanteButton];
+        
+        
+        [self setToolbarItems:toolbarButtons animated:YES];
+        
+        
+        
+        
+        [[InAppStore sharedInstance] fakeSubscriber];
+        //|| _issue.freeValue
+        
+        //[self.logText setText:@"usuario logado."];
+        
+    }];
+     
+     
+
+}
+    
+    
+- (void)tokenExpiredProvidences:(NSNotification *)notification
+{
+    [self.assinanteButton setTitle:@"Entrar"];
+    //[self.logText setText:@"aguardando login"];
+}
+
+- (NSString *)getValueForKeyFromJsonObject:(NSString *)key jsonObject:(id)jsonObject
+{
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonObject options:0 error:nil];
+    NSString *stringToReturn = [json objectForKey:key];
+    
+    return stringToReturn;
+}
+
+
+- (IBAction)clearToken:(id)sender {
+    
+    [self.credentialStore clearSavedCredentials];
+}
+
+#pragma mark - 
+#pragma mark all stuff
+
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,20 +190,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    // login stuff
+    self.credentialStore = [[CredentialStore alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(tokenExpiredProvidences:) name:@"token-expired" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(tokenSaved:) name:@"token-changed" object:nil];
+    
+    //
+    
 //    NSLog(@"view did load");
     
     
     /**************** START OF NAVBAR CONFIG **************/
     
     UINavigationBar *navBar = self.navigationController.navigationBar;
-    
+
     // condicionais iPhone / iPad
     UIImage *woodBg = isPad ? [UIImage imageNamed:@"NavBar-iPad"] : [UIImage imageNamed:@"NavBar-iPhone"];
     [navBar setBackgroundImage:woodBg forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.600 green:0.400 blue:0.200 alpha:0.550];
+    self.navigationController.navigationBar.tintColor = DEFAULT_TINT;
     
     
-    
+    /*
     UIImage* buttonImage =[UIImage imageNamed:@"TSA_GearIcon"];
     
     
@@ -78,6 +240,40 @@
                                        }];
     
     self.navigationItem.rightBarButtonItem = settingsButton;
+    */
+    //[[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    UIBarButtonItem *restoreButton = [[UIBarButtonItem alloc] initWithTitle:@"Restaurar compras" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        MBProgressHUD *temp_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        // Configure for text only and offset down
+        temp_hud.mode = MBProgressHUDModeText;
+        temp_hud.dimBackground = YES;
+        temp_hud.labelText = NSLocalizedString(@"AGUARDANDO", nil);
+        temp_hud.removeFromSuperViewOnHide = YES;
+        [[InAppStore sharedInstance] restorePurchasesWithCompletionBlock:^(){
+            temp_hud.labelText = NSLocalizedString(@"COMPRAS RESTAURADAS", nil);
+            [temp_hud hide:YES afterDelay:1];
+        } failureBlock:^(NSError*error){
+            temp_hud.labelText = NSLocalizedString(@"FALHA AO RESTAURAR COMPRAS", nil);
+            [temp_hud hide:YES afterDelay:1];
+        }];
+    }];
+    
+     if (![self.credentialStore isLoggedIn]) {
+        
+        self.assinanteButton = [[UIBarButtonItem alloc] initWithTitle:@"Assinante da edição impressa?" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [self getThere:sender];
+        }];
+        
+        
+        
+   
+        self.navigationItem.leftBarButtonItem = self.assinanteButton;
+    }
+    
+    self.navigationItem.rightBarButtonItem = restoreButton;
+
     
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -233,6 +429,9 @@
 //        pdfController.pageTransition = PSPDFPageCurlTransition;
         pdfController.pageMode = PSPDFPageModeAutomatic;
         pdfController.statusBarStyleSetting = PSPDFStatusBarSmartBlackHideOnIpad;
+        pdfController.tintColor = SECONDARY_TINT;
+        pdfController.shouldTintAlertView = YES;
+        pdfController.shouldTintPopovers = YES;
         
         // don't use thumbnails if the PDF is not rendered.
         // FullPageBlocking feels good when combined with pageCurl, less great with other scroll modes, especially PSPDFPageScrollContinuousTransition.
