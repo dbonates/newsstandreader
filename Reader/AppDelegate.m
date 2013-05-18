@@ -24,7 +24,7 @@ BOOL printSubscriber;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-
+[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     self.credentialStore = [[CredentialStore alloc] init];
     
     /*[[NSNotificationCenter defaultCenter] addObserver:self

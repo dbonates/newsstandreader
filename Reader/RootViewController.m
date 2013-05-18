@@ -199,18 +199,37 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(tokenSaved:) name:@"token-changed" object:nil];
     
-    //
-    
-//    NSLog(@"view did load");
+    // NSLog(@"view did load");
     
     
     /**************** START OF NAVBAR CONFIG **************/
-    
     UINavigationBar *navBar = self.navigationController.navigationBar;
+    UIImage *navBarBg;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+	
+	if (UIInterfaceOrientationIsLandscape(orientation)) {
+        navBarBg = [UIImage imageNamed:@"NavBar-iPad-Landscape"];
+    }
+    else
+    {
+        navBarBg = [UIImage imageNamed:@"NavBar-iPad"];
+    }
+    
+    
+    [navBar setBackgroundImage:navBarBg forBarMetrics:UIBarMetricsDefault];
+    
+    //UINavigationBar *navBar = self.navigationController.navigationBar;
 
     // condicionais iPhone / iPad
-    UIImage *woodBg = isPad ? [UIImage imageNamed:@"NavBar-iPad"] : [UIImage imageNamed:@"NavBar-iPhone"];
-    [navBar setBackgroundImage:woodBg forBarMetrics:UIBarMetricsDefault];
+    // UIImage *navBarBg = [UIImage imageNamed:@"NavBar-iPad"];
+    //UIImage *navBarBgLandscape = [UIImage imageNamed:@"NavBar-iPad-Landscape"];
+    
+    
+    
+    //    [navBar setBackgroundImage:navBarBg forBarMetrics:UIBarMetricsDefault];
+    //   [navBar setBackgroundImage:navBarBgLandscape forBarMetrics:UIBarMetricsLandscapePhone];
+    
     self.navigationController.navigationBar.tintColor = DEFAULT_TINT;
     
     
@@ -274,7 +293,7 @@
     
     self.navigationItem.rightBarButtonItem = restoreButton;
 
-    
+    /*
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
@@ -285,7 +304,7 @@
     self.navigationItem.titleView = label;
     label.text =@"Panorama da Aquicultura";
     [label sizeToFit];
-    
+    */
     
     /**************** END OF NAVBAR CONFIG **************/
     
@@ -298,6 +317,23 @@
                  object:nil];
     
    	// Do any additional setup after loading the view.
+}
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    UIImage *navBarBg; // = [UIImage imageNamed:@"NavBar-iPad"];
+    //UIImage *navBarBgLandscape = [UIImage imageNamed:@"NavBar-iPad-Landscape"];
+    
+    UINavigationBar *navBar = self.navigationController.navigationBar;   
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        navBarBg = [UIImage imageNamed:@"NavBar-iPad-Landscape"];
+    }
+    else
+    {
+        navBarBg = [UIImage imageNamed:@"NavBar-iPad"];
+    }
+    [navBar setBackgroundImage:navBarBg forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)finishedDownloadingAllOnFirstLaunch:(NSNotification*)notif
