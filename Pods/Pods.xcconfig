@@ -2,7 +2,7 @@ ALWAYS_SEARCH_USER_PATHS = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = ${PODS_HEADERS_SEARCH_PATHS}
 OTHER_LDFLAGS = -ObjC -Wl,-no_compact_unwind -framework CoreText -framework MessageUI -framework QuartzCore -framework UIKit
-PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/BlocksKit" "${PODS_ROOT}/BuildHeaders/FPPopover" "${PODS_ROOT}/BuildHeaders/MGBox2" "${PODS_ROOT}/BuildHeaders/libffi"
+PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/BlocksKit" "${PODS_ROOT}/BuildHeaders/FPPopover" "${PODS_ROOT}/BuildHeaders/MGBox2" "${PODS_ROOT}/BuildHeaders/YLProgressBar" "${PODS_ROOT}/BuildHeaders/libffi"
 PODS_HEADERS_SEARCH_PATHS = ${PODS_PUBLIC_HEADERS_SEARCH_PATHS}
-PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/FPPopover" "${PODS_ROOT}/Headers/MGBox2" "${PODS_ROOT}/Headers/libffi"
+PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/BlocksKit" "${PODS_ROOT}/Headers/FPPopover" "${PODS_ROOT}/Headers/MGBox2" "${PODS_ROOT}/Headers/YLProgressBar" "${PODS_ROOT}/Headers/libffi"
 PODS_ROOT = ${SRCROOT}/Pods

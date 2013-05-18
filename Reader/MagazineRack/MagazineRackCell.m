@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "IssueManager.h"
 #import "InAppStore.h"
+#import "UIImage+UIImage_DBImageBlender.h"
+#import "YLProgressBar.h"
 
 #define kMagazineRackCellShadowRadius               5.0
 #define kMagazineRackCellShadowOffset               CGSizeMake(0,0)
@@ -21,7 +23,7 @@
 #pragma mark - MagazineRackCellContentView
 @interface MagazineRackCellContentView : UIView
 @property (strong, nonatomic) UIImage *coverImage;
-@property (strong, nonatomic) UIProgressView *progressView;
+@property (strong, nonatomic) YLProgressBar *progressView;
 @end
 
 @implementation MagazineRackCellContentView
@@ -31,9 +33,12 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-        [self.progressView sizeThatFits:self.frame.size];
-        self.progressView.center = CGPointMake(self.center.x, CGRectGetHeight(self.frame));
+        self.progressView = [[YLProgressBar alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        self.progressView.progressTintColor = [UIColor colorWithRed:0.000 green:0.528 blue:1.000 alpha:1.000];
+        CGSize sizeForProgressBar = self.frame.size;
+        sizeForProgressBar.width = sizeForProgressBar.width-30;
+        [self.progressView sizeThatFits:sizeForProgressBar];
+        self.progressView.center = CGPointMake(self.center.x-3, CGRectGetHeight(self.frame));
         [self addSubview:self.progressView];
         
     }
@@ -43,10 +48,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    CGSize sizeForProgressBar = self.frame.size;
+    sizeForProgressBar.width = sizeForProgressBar.width-30;
+    [self.progressView sizeThatFits:sizeForProgressBar];
     
-    [self.progressView sizeThatFits:self.frame.size];
+    [self.progressView sizeThatFits:sizeForProgressBar];
     self.progressView.frame = CGRectInset(self.progressView.frame, 15, 0);
-    self.progressView.center = CGPointMake(self.center.x, CGRectGetHeight(self.frame) - CGRectGetHeight(self.progressView.frame) - 15);
+    self.progressView.center = CGPointMake(self.center.x-3, CGRectGetHeight(self.frame) - CGRectGetHeight(self.progressView.frame) - 15);
 
 }
 - (void)drawRect:(CGRect)rect
@@ -85,7 +93,7 @@
     CGRect imageDrawRect = CGRectMake(x, y, width, height);
     
     [image drawInRect:imageDrawRect];
-    
+    /*
     for(NSUInteger effectIndex = 0; effectIndex < kMagazineRackCellPageEffectNumberOfPages; effectIndex++){
         CGRect fillRect = CGRectMake(CGRectGetMaxX(imageDrawRect) + effectIndex * KMagazineRackCellPageEffectPageWidth,
                                      CGRectGetMinY(imageDrawRect),
@@ -98,7 +106,7 @@
             [[UIColor blackColor] setFill];
         }
         CGContextFillRect(ctx, fillRect);
-    }
+    }*/
 }
 @end
 
@@ -192,7 +200,7 @@
 {
     [super applyLayoutAttributes:layoutAttributes];
     [_contentView setNeedsDisplay];
-    _imageView.frame = CGRectOffset(_imageView.bounds, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(_imageView.frame) - 2, 2);
+    _imageView.frame = CGRectOffset(_imageView.bounds, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(_imageView.frame) - 40, 2);
     
 }
 
@@ -207,7 +215,18 @@
         Asset *coverImageAsset = _issue.coverImage[0];
         NSString *coverImagePath = coverImageAsset.filePath;
         UIImage *coverImage = [[UIImage alloc] initWithContentsOfFile:coverImagePath];
-        _contentView.coverImage = coverImage;
+        UIImage *beatifullOne = [UIImage
+                                 blendOverlay:coverImage
+                                 withBaseImage:[UIImage imageNamed:@"magazine_mockup_base"]
+                                 highlightImage:[UIImage imageNamed:@"magazine_mockup_reflexo"]
+                                 highlightMode:kCGBlendModeLighten
+                                 usehighlight:YES
+                                 currentCoverXoffset:75
+                                 currentCoverYoffset:2
+                                 currentHighlightXoffset:75
+                                 currentHighlightYoffset:2
+                                 ];
+        _contentView.coverImage = beatifullOne;
         _contentView.progressView.hidden  = !issue.downloadingValue;
         
         [_issue addObserver:self

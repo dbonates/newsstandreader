@@ -85,7 +85,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     
 //    layout.headerReferenceSize = CGSizeMake(768, HEADER_HEIGHT);
     layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 35.0;
+    layout.minimumInteritemSpacing = -15.0;
     layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, MARGEM_TOP, MARGEM_DIREITA); // laterais
 //    layout.headerReferenceSize = CGSizeMake(768, 150);
 }
@@ -96,7 +96,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     
 //    layout.headerReferenceSize = CGSizeMake(1024, HEADER_HEIGHT);
     layout.minimumLineSpacing = 50;
-    layout.minimumInteritemSpacing = 35.0;
+    layout.minimumInteritemSpacing = -15.0;
     layout.sectionInset = UIEdgeInsetsMake(0, MARGEM_ESQUERDA, SHELF_HEIGHT-COVER_HEIGHT_CONSTRAIN, MARGEM_DIREITA); // laterais
 //    layout.headerReferenceSize = CGSizeMake(768, 100);
     
@@ -122,10 +122,10 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *image = [UIImage imageNamed:@"7"];
+    UIImage *image = [UIImage imageNamed:@"magazine_mockup_base"];
     
     CGSize size = [MagazineRackCell sizeWithImage:image constrainedToHeight:COVER_HEIGHT_CONSTRAIN];
-    dLOG(@"%@", NSStringFromCGSize(size));
+    //dLOG(@"%@", NSStringFromCGSize(size));
     return size;
 }
 

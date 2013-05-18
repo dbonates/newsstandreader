@@ -16,7 +16,7 @@
     self = [super initWithCoder:aDecoder];
     
     if (self){
-        self.headerReferenceSize = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad? (CGSize){30, 30} : (CGSize){23, 23}; // 100
+        self.headerReferenceSize = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad? (CGSize){30, 40} : (CGSize){23, 23}; // 100
     }
     
     return self;

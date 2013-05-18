@@ -4,16 +4,19 @@ PODS:
   - FPPopover (1.4.1)
   - libffi (3.0.11)
   - MGBox2 (2.0.0)
+  - YLProgressBar (1.0.0)
 
 DEPENDENCIES:
   - BlocksKit
   - FPPopover (~> 1.4.1)
   - MGBox2 (~> 2.0.0)
+  - YLProgressBar (~> 1.0.0)
 
 SPEC CHECKSUMS:
   BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
   FPPopover: 0289b796c031d8f27bd221d93d282ffe23619893
   libffi: 8a1d9ba43c0c84b546b42c6f742714e73aa07ae1
   MGBox2: 7c09e36c2271f9af16fdb5141a0ca554ecee4d8d
+  YLProgressBar: 75bc1ea888ed9fb92a913b84fd6f0f9567f4ff27
 
 COCOAPODS: 0.19.1
