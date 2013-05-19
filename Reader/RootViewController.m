@@ -21,6 +21,8 @@
 #import "AuthAPIClient.h"
 #import "SVProgressHUD.h"
 #import "InAppStore.h"
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
 
 #define OPTIONS_SIZE CGSizeMake(320,240)
 #define LOGIN_WINSIZE CGSizeMake(340,280)
@@ -261,7 +263,7 @@
     self.navigationItem.rightBarButtonItem = settingsButton;
     */
     //[[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    
+    /*
     UIBarButtonItem *restoreButton = [[UIBarButtonItem alloc] initWithTitle:@"Restaurar compras" style:UIBarButtonItemStylePlain handler:^(id sender) {
         MBProgressHUD *temp_hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
@@ -288,11 +290,14 @@
         
         
    
-        self.navigationItem.leftBarButtonItem = self.assinanteButton;
+       // self.navigationItem.leftBarButtonItem = self.assinanteButton;
     }
     
+   
+    
     self.navigationItem.rightBarButtonItem = restoreButton;
-
+ */
+    [self setupLeftMenuButton];
     /*
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -319,6 +324,19 @@
    	// Do any additional setup after loading the view.
 }
 
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+//    [leftDrawerButton setMenuButtonColor:DEFAULT_TINT forState:UIControlStateNormal];
+//    [leftDrawerButton setMenuButtonColor:DEFAULT_TINT forState:UIControlStateHighlighted];
+//    [leftDrawerButton setShadowColor:SECONDARY_TINT forState:UIControlStateNormal];
+
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+- (void)leftDrawerButtonPress:(id)sender
+{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {

@@ -10,4 +10,7 @@
 
 @interface OptionsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scroller;
+- (IBAction)changeBk:(id)sender;
+- (IBAction)restaurarCompras:(id)sender;
 @end

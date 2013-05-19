@@ -27,7 +27,8 @@
 {
     [super prepareLayout];
     
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wood Tile"]];
+    
+    
 //    self.minimumLineSpacing = 145;
 }
 

@@ -68,8 +68,32 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
                                                  withPredicate:predicate
                                                        groupBy:nil
                                                       delegate:self];
-	// Do any additional setup after loading the view.
+	
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundChoosed:) name:@"panorama.backgroundChanged" object:nil];
+    
+    NSString *patternBkSaved = [[NSUserDefaults standardUserDefaults] objectForKey:@"patternBk"];
+
+    if (patternBkSaved) {
+        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:patternBkSaved]];
+    }
+    else
+    {
+        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wood Tile"]];
+    }
 }
+
+- (void)backgroundChoosed:(NSNotification *)notification
+{
+    //wLOG(@"%@", [notification userInfo]);
+    NSString *patternName = [[notification userInfo] objectForKey:@"patternBk"];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:patternName]];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:patternName forKey:@"patternBk"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {

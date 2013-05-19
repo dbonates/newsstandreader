@@ -14,6 +14,10 @@
 #import "JSONKit.h"
 #import "NSData+Base64.h"
 #import "CredentialStore.h"
+#import "MMDrawerController.h"
+#import "MMDrawerVisualState.h"
+#import "RootViewController.h"
+#import "OptionsViewController.h"
 //#import "PonyDebugger.h"
 
 @implementation AppDelegate
@@ -23,6 +27,71 @@ BOOL printSubscriber;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [MagicalRecord setupCoreDataStack];
+    /*
+     
+     PANEL
+     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    UIStoryboard *storyboard = [self storyboard];
+    [self.window setRootViewController:[storyboard instantiateInitialViewController]];
+    
+        
+    wLOG(@"Mensagem de alerta!");
+    iLOG(@"Informação importante!");
+    NSLog(@"Nada demais!");
+
+    
+    return YES;
+}
+
+- (UIStoryboard *)storyboard
+{
+    NSString *sbName = @"Storyboard_";
+    if ([self isPad]) {
+        sbName = [sbName stringByAppendingString:@"iPad"];
+    }
+    else
+    {
+        sbName = [sbName stringByAppendingString:@"iPhone"];
+    }
+    
+    return [UIStoryboard storyboardWithName:sbName bundle:nil];
+}
+
+- (BOOL)isPad
+{
+    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+}
+     */
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    UIViewController * leftSideDrawerViewController = [storyboard instantiateViewControllerWithIdentifier:@"leftViewController"];
+    
+        
+    UIViewController * centerViewController = [storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
+    
+
+     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:navigationController
+                                             leftDrawerViewController:leftSideDrawerViewController];
+    [drawerController setMaximumLeftDrawerWidth:320.0];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModePanningNavigationBar];
+    [drawerController setShouldStretchDrawer:NO];
+    [drawerController setDrawerVisualStateBlock:[MMDrawerVisualState swingingDoorVisualStateBlock]];
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setRootViewController:drawerController];
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    
     
 [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     self.credentialStore = [[CredentialStore alloc] init];
@@ -50,7 +119,6 @@ BOOL printSubscriber;
     printSubscriber = [self.credentialStore isLoggedIn];
 
     
-    [MagicalRecord setupCoreDataStack];
     
     /*
       Pony DEBUG: #import "PonyDebugger.h"
