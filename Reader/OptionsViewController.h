@@ -10,7 +10,24 @@
 
 @interface OptionsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scroller;
+
 - (IBAction)changeBk:(id)sender;
 - (IBAction)restaurarCompras:(id)sender;
+
+- (IBAction)getThere:(id)sender;
+- (IBAction)clearToken:(id)sender;
+
+- (void)tokenSaved:(NSNotification *)notification;
+- (void)tokenExpiredProvidences:(NSNotification *)notification;
+
+
+- (IBAction)login:(id)sender;
+- (IBAction)cancel:(id)sender;
+
+- (NSString *)getValueForKeyFromJsonObject:(NSString *)key jsonObject:(id)jsonObject;
+
 @end
