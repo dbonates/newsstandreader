@@ -23,6 +23,8 @@
 
 @implementation MagazineRackViewController
 
+BOOL showOnlyReadyIssues;
+
 //static NSString *MagazineRackHeaderViewReuseIdentifier = @"MagazineRackHeaderView";
 static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 
@@ -62,7 +64,27 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
 {
     [super viewDidLoad];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
+    // melhorar o nome dessa variavel pois ela deve indicar o valor e não se existe.
+    BOOL showOnlyReadyIssuesAlreadyExist = [[NSUserDefaults standardUserDefaults] boolForKey:@"showOnlyReadyIssues"];
+    
+    
+    showOnlyReadyIssues = showOnlyReadyIssuesAlreadyExist;
+    
+    
+    [[NSUserDefaults standardUserDefaults] setBool:showOnlyReadyIssues forKey:@"showOnlyReadyIssues"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterReadyIssues:) name:@"panorama.filterReadyIssues" object:nil];
+    
+    NSPredicate *predicate;
+    if (showOnlyReadyIssues) {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@", @(IssueStateReadyForReading)];
+    }
+    else
+    {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
+    }
+    
     self.fetchedResultsController = [Issue MR_fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate
@@ -80,6 +102,35 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     {
         self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern9"]];
     }
+}
+
+- (void)filterReadyIssues:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    NSString * shouldFilterReadyIssues = [userInfo valueForKey:@"filterReadyIssues"];
+    //iLOG(@"filtrar revistas: %@", shouldFilterReadyIssues);
+    
+    showOnlyReadyIssues = [shouldFilterReadyIssues isEqualToString:@"YES"] ? YES : NO;
+    [[NSUserDefaults standardUserDefaults] setBool:showOnlyReadyIssues forKey:@"showOnlyReadyIssues"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSPredicate *predicate;
+    if (showOnlyReadyIssues) {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@", @(IssueStateReadyForReading)];
+    }
+    else
+    {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
+    }
+    
+    self.fetchedResultsController = [Issue MR_fetchAllSortedBy:@"date"
+                                                     ascending:NO
+                                                 withPredicate:predicate
+                                                       groupBy:nil
+                                                      delegate:self];
+    
+    [self.collectionView reloadData];
+
 }
 
 - (void)backgroundChoosed:(NSNotification *)notification

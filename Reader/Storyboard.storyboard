@@ -21,7 +21,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="pattern15_lateral.png" id="ZAT-eQ-fGm">
-                                                <rect key="frame" x="0.0" y="0.0" width="640" height="60"/>
+                                                <rect key="frame" x="0.0" y="-31" width="640" height="88"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="linha.png" id="chx-cR-igj">
@@ -234,6 +234,9 @@
                                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="oKk-Rf-zWC">
                                                         <rect key="frame" x="117" y="84" width="79" height="27"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="filterReadyIssues:" destination="tFq-L7-KEk" eventType="valueChanged" id="hx0-av-s9r"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -692,6 +695,7 @@
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="changeBk:"/>
                 <relationship kind="action" name="clearToken:"/>
+                <relationship kind="action" name="filterReadyIssues:"/>
                 <relationship kind="action" name="getThere:"/>
                 <relationship kind="action" name="login:"/>
                 <relationship kind="action" name="restaurarCompras:"/>

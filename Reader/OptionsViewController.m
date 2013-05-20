@@ -29,7 +29,7 @@
     self.scroller.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
     self.readyIssuesFilterSwitch.onTintColor = [UIColor colorWithRed:0.670 green:0.431 blue:0.171 alpha:1.000];
-    self.readyIssuesFilterSwitch.on = NO;
+    self.readyIssuesFilterSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"showOnlyReadyIssues"];
     // login stuff
     self.credentialStore = [[CredentialStore alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -152,6 +152,14 @@
 - (void)tokenExpiredProvidences:(NSNotification *)notification
 {
     //[self.logText setText:@"aguardando login"];
+}
+
+- (IBAction)filterReadyIssues:(id)sender {
+    //@"panorama.filterReadyIssues"
+    
+    UISwitch *filter = (UISwitch *)sender;
+    NSDictionary *userInfo =  @{@"filterReadyIssues": filter.isOn ? @"YES" : @"NO"};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"panorama.filterReadyIssues" object:self userInfo:userInfo];
 }
 
 

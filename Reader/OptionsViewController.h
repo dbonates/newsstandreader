@@ -25,6 +25,7 @@
 - (void)tokenSaved:(NSNotification *)notification;
 - (void)tokenExpiredProvidences:(NSNotification *)notification;
 
+- (IBAction)filterReadyIssues:(id)sender;
 
 - (IBAction)login:(id)sender;
 - (IBAction)cancel:(id)sender;
