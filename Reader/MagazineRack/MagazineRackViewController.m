@@ -78,7 +78,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     }
     else
     {
-        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wood Tile"]];
+        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern9"]];
     }
 }
 

@@ -25,6 +25,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.scroller.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
+    self.readyIssuesFilterSwitch.onTintColor = [UIColor colorWithRed:0.670 green:0.431 blue:0.171 alpha:1.000];
+    self.readyIssuesFilterSwitch.on = NO;
     // login stuff
     self.credentialStore = [[CredentialStore alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self

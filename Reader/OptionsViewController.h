@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scroller;
+@property (weak, nonatomic) IBOutlet UISwitch *readyIssuesFilterSwitch;
 
 - (IBAction)changeBk:(id)sender;
 - (IBAction)restaurarCompras:(id)sender;
