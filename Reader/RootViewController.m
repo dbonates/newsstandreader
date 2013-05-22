@@ -24,6 +24,8 @@
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
 
+#import "RevistaViewController.h"
+
 #define OPTIONS_SIZE CGSizeMake(320,240)
 #define LOGIN_WINSIZE CGSizeMake(340,280)
 #define DEFAULT_TINT [UIColor colorWithRed:0.600 green:0.400 blue:0.200 alpha:0.550]
@@ -476,7 +478,7 @@
         
         
         // Open view controller. Embed into an UINavigationController to enable the toolbar.
-        PSPDFViewController *pdfController = [[PSPDFViewController alloc] initWithDocument:document];
+        RevistaViewController *pdfController = [[RevistaViewController alloc] initWithDocument:document];
         
         ///// CONFIGURACOES
         
@@ -486,6 +488,7 @@
         pdfController.tintColor = SECONDARY_TINT;
         pdfController.shouldTintAlertView = YES;
         pdfController.shouldTintPopovers = YES;
+        pdfController.rightBarButtonItems = @[pdfController.brightnessButtonItem, pdfController.searchButtonItem, pdfController.outlineButtonItem, pdfController.viewModeButtonItem];
         
         // don't use thumbnails if the PDF is not rendered.
         // FullPageBlocking feels good when combined with pageCurl, less great with other scroll modes, especially PSPDFPageScrollContinuousTransition.

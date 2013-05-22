@@ -225,6 +225,8 @@
                                  currentCoverYoffset:2
                                  currentHighlightXoffset:75
                                  currentHighlightYoffset:2
+                                 overlayCoverSize:CGSizeMake(300, 400)
+                                 overlayHighlightSize:CGSizeMake(300, 400)
                                  ];
         _contentView.coverImage = beatifullOne;
         _contentView.progressView.hidden  = !issue.downloadingValue;

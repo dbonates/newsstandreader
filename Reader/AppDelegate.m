@@ -80,7 +80,7 @@ BOOL printSubscriber;
                                              leftDrawerViewController:leftSideDrawerViewController];
     [drawerController setMaximumLeftDrawerWidth:320.0];
     [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
-    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModePanningNavigationBar];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [drawerController setShouldStretchDrawer:NO];
     [drawerController setDrawerVisualStateBlock:[MMDrawerVisualState swingingDoorVisualStateBlock]];
     
