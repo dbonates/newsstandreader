@@ -7,6 +7,11 @@
 //
 
 #import "RevistaViewController.h"
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
+#import "Issue.h"
+#import "Asset.h"
+#import "UIImage+UIImage_DBImageBlender.h"
 
 @interface RevistaViewController () <PSPDFViewControllerDelegate>
 
@@ -26,17 +31,165 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - PSPDFViewControllerDelegate
 
--(void)pdfViewController:(PSPDFViewController *)pdfController didSelectAnnotation:(PSPDFAnnotation *)annotation onPageView:(PSPDFPageView *)pageView
-{
+//-(void)pdfViewController:(PSPDFViewController *)pdfController didSelectAnnotation:(PSPDFAnnotation *)annotation onPageView:(PSPDFPageView *)pageView
+//{
+//    PSPDFTextParser *parser = pageView.textParser;
+//    
+//    //NSArray *rects = annotation;
+//    
+//    //NSDictionary *dic = [pageView objectsAtRect:(CGRect)[rects objectAtIndex:0] options:nil];
+//    
+//                      
+//                       
+//    
+////    [parser textWithGlyphs:nil    ];
+//    NSLog(@"taped numa anotação: %@", annotation);
+//    
+//}
+
+
+- (NSArray *)pdfViewController:(PSPDFViewController *)pdfController shouldShowMenuItems:(NSArray *)menuItems atSuggestedTargetRect:(CGRect)rect forAnnotation:(PSPDFAnnotation *)annotation inRect:(CGRect)textRect onPageView:(PSPDFPageView *)pageView {
     
+    //NSLog(@"showing menu %@ for %@", menuItems, annotation);
+    NSMutableArray *newMenuItems = [menuItems mutableCopy];
+    for (PSPDFMenuItem *menuItem in menuItems) {
+        //iLOG(@"%@",menuItem.identifier);
+        if ([menuItem isKindOfClass:[PSPDFMenuItem class]] &&
+            ([menuItem.identifier isEqualToString:@"Line"] ||
+             [menuItem.identifier isEqualToString:@"Color..."] ||
+             [menuItem.identifier isEqualToString:@"Type..."] ||
+             [menuItem.identifier isEqualToString:@"Opacity..."])
+            ) {
+            [newMenuItems removeObjectIdenticalTo:menuItem];
+            
+        }
+    }
+
+    PSPDFMenuItem *twitterItem = [[PSPDFMenuItem alloc] initWithTitle:@"Twitter" image:[UIImage imageNamed:@"twitter-white"] block:^{
+        if ([annotation isKindOfClass:PSPDFHighlightAnnotation.class]) {
+            NSString *highlightedString = [(PSPDFHighlightAnnotation *)annotation highlightedString];
+            [self shareText:highlightedString onSocialNet:@"twitter"];
+        }
+        
+        
+    } identifier:@"Twitter"];
+    [newMenuItems addObject:twitterItem];
+    
+    
+    PSPDFMenuItem *facebookItem = [[PSPDFMenuItem alloc] initWithTitle:@"Facebook" image:[UIImage imageNamed:@"facebook-white"] block:^{
+        if ([annotation isKindOfClass:PSPDFHighlightAnnotation.class]) {
+            NSString *highlightedString = [(PSPDFHighlightAnnotation *)annotation highlightedString];
+            [self shareText:highlightedString onSocialNet:@"facebook"];
+        }
+        
+    } identifier:@"Facebook"];
+    [newMenuItems addObject:facebookItem];
+    
+    // Print highlight contents
+    //if ([annotation isKindOfClass:PSPDFHighlightAnnotation.class]) {
+    //    NSString *highlightedString = [(PSPDFHighlightAnnotation *)annotation highlightedString];
+    //   NSLog(@"Highlighted value: %@", highlightedString);
+    //}
+    
+    return newMenuItems;
 }
 
-- (BOOL)pdfViewController:(PSPDFViewController *)pdfController didTapOnAnnotation:(PSPDFAnnotation *)annotation annotationPoint:(CGPoint)annotationPoint annotationView:(UIView<PSPDFAnnotationViewProtocol> *)annotationView pageView:(PSPDFPageView *)pageView viewPoint:(CGPoint)viewPoint
+
+- (void)shareText:(NSString *)text onSocialNet:(NSString *)socialNet
 {
-    NSLog(@"taped numa anotação: %@", [annotation userInfo]);
-    return YES;
-}
+    // limite para incluir link: 116 caracteres
+    //NSString *panoramaLink = @"http://goo.gl/0E7b5";
+    NSString *panoramaLink = @"http://panoramadaaquicultura.com.br";
+    NSString *textToshare;
+    
+    iLOG(@"compartilhando texto [%d]: %@", textToshare.length,textToshare);
+    
+    ACAccountStore *accountsStore = [[ACAccountStore alloc] init];
+    
+    if ([socialNet isEqualToString:@"twitter"]) {
+        NSRange stringRange = {0, MIN([text length], 140-panoramaLink.length)};
+        stringRange = [text rangeOfComposedCharacterSequencesForRange:stringRange];
+        textToshare = [text substringWithRange:stringRange];
 
+        
+        ACAccountType *twitterAccountType = [accountsStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+        
+        [accountsStore requestAccessToAccountsWithType:twitterAccountType
+                                                   options:nil
+                                                completion:^(BOOL granted, NSError *error) {
+                                                    if (granted) {
+                                                        //iLog(@"Acesseo liberado!");
+                                                        //ACAccount *account = [[accountsStore accountsWithAccountType:twitterAccountType] lastObject];
+                                                    } else {
+                                                        //NSLog(@"Permissão negada :(  %@", error);
+                                                    }
+                                                }];
+        
+        
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        [tweetSheet setInitialText:textToshare];
+        [tweetSheet addURL:[NSURL URLWithString:panoramaLink]];
+        [self presentViewController:tweetSheet
+                           animated:YES
+                         completion:nil];
+    }
+    
+    else if ([socialNet isEqualToString:@"facebook"])
+    {
+        ACAccountType *facebookAccountType = [accountsStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+        id options = @{
+                       ACFacebookAppIdKey: @"459554034135122",
+                       ACFacebookPermissionsKey: @[ @"email", @"read_friendlists"],
+                       ACFacebookAudienceKey: ACFacebookAudienceFriends
+                       };
+        
+        [accountsStore requestAccessToAccountsWithType:facebookAccountType
+                                                   options:options
+                                                completion:^(BOOL granted, NSError *error) {
+                                                    if (granted) {
+                                                        NSLog(@"Acesseo liberado!");
+                                                    
+                                                    } else {
+                                                        NSLog(@"Permissão negada :( %@", error);
+                                                    }
+                                                }];
+        
+        SLComposeViewController *facebookSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [facebookSheet setInitialText:text];
+        
+        [facebookSheet addURL:[NSURL URLWithString:panoramaLink]];
+        Asset *coverImageAsset = _issue.coverImage[0];
+        
+        NSString *coverImagePath = coverImageAsset.filePath;
+        UIImage *coverImage = [[UIImage alloc] initWithContentsOfFile:coverImagePath];
+        UIImage *beatifullOne = [UIImage
+                                 blendOverlay:coverImage
+                                 withBaseImage:[UIImage imageNamed:@"magazine_mockup_base"]
+                                 highlightImage:[UIImage imageNamed:@"magazine_mockup_reflexo"]
+                                 highlightMode:kCGBlendModeLighten
+                                 usehighlight:YES
+                                 currentCoverXoffset:75
+                                 currentCoverYoffset:2
+                                 currentHighlightXoffset:75
+                                 currentHighlightYoffset:2
+                                 overlayCoverSize:CGSizeMake(300, 400)
+                                 overlayHighlightSize:CGSizeMake(300, 400)
+                                 ];
+        UIImage *smallerOne = [UIImage smallerVersion:beatifullOne finalSize:CGSizeMake(150, 140)];
+        
+       [facebookSheet addImage:smallerOne];
+        
+        
+        [self presentViewController:facebookSheet
+                           animated:YES
+                         completion:^{
+                             iLOG(@"Postagem efetuada!");
+                         }];
+        
+    }
+}
 
 - (NSArray *)pdfViewController:(PSPDFViewController *)pdfController shouldShowMenuItems:(NSArray *)menuItems atSuggestedTargetRect:(CGRect)rect forSelectedText:(NSString *)selectedText inRect:(CGRect)textRect onPageView:(PSPDFPageView *)pageView {
     
@@ -71,7 +224,7 @@
     
     PSPDFMenuItem *twitterItem = [[PSPDFMenuItem alloc] initWithTitle:@"Twitter" image:[UIImage imageNamed:@"twitter-white"] block:^{
         NSString *tweetTrimmedSearchText = PSPDFTrimString(selectedText);
-        NSLog(@"Twittar texto: \"%@\'", tweetTrimmedSearchText);
+        [self shareText:tweetTrimmedSearchText onSocialNet:@"twitter"];
         
     } identifier:@"Twitter"];
     [newMenuItems addObject:twitterItem];
@@ -79,7 +232,7 @@
     
     PSPDFMenuItem *facebookItem = [[PSPDFMenuItem alloc] initWithTitle:@"Facebook" image:[UIImage imageNamed:@"facebook-white"] block:^{
         NSString *facebookTrimmedSearchText = PSPDFTrimString(selectedText);
-        NSLog(@"postar no facebook o texto: \"%@\'", facebookTrimmedSearchText);
+        [self shareText:facebookTrimmedSearchText onSocialNet:@"facebook"];
         
     } identifier:@"Facebook"];
     [newMenuItems addObject:facebookItem];

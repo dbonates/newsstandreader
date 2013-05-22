@@ -480,6 +480,8 @@
         // Open view controller. Embed into an UINavigationController to enable the toolbar.
         RevistaViewController *pdfController = [[RevistaViewController alloc] initWithDocument:document];
         
+        pdfController.issue = issue;
+        
         ///// CONFIGURACOES
         
 //        pdfController.pageTransition = PSPDFPageCurlTransition;

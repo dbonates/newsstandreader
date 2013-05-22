@@ -7,7 +7,7 @@
 //
 
 #import <PSPDFKit/PSPDFKit.h>
-
+@class Issue;
 @interface RevistaViewController : PSPDFViewController
-
+@property (nonatomic, strong) Issue *issue;
 @end

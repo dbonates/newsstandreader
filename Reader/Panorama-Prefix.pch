@@ -49,5 +49,24 @@
 #endif
 
 #import "DBmacros.h"
+#define XCODE_COLORS_ESCAPE @"\033["
+
+#define XCODE_COLORS_RESET_FG  XCODE_COLORS_ESCAPE @"fg;" // Clear any foreground color
+#define XCODE_COLORS_RESET_BG  XCODE_COLORS_ESCAPE @"bg;" // Clear any background color
+#define XCODE_COLORS_RESET     XCODE_COLORS_ESCAPE @";"   // Clear any foreground or background color
+
+// warning log
+#define LOG_WARNING XCODE_COLORS_ESCAPE @"fg170,0,0;" XCODE_COLORS_ESCAPE @"bg255,220,0;"
+#define wLOG(fmt, ...) NSLog(LOG_WARNING fmt XCODE_COLORS_RESET, ##__VA_ARGS__)
+// info log
+#define LOG_INFO XCODE_COLORS_ESCAPE @"fg255,255,255;" XCODE_COLORS_ESCAPE @"bg0,110,230;"
+#define iLOG(fmt, ...) NSLog(LOG_INFO fmt XCODE_COLORS_RESET, ##__VA_ARGS__)
+// success log
+#define LOG_SUCCESS XCODE_COLORS_ESCAPE @"fg255,255,255;" XCODE_COLORS_ESCAPE @"bg0,163,0;"
+#define sLOG(fmt, ...) NSLog(LOG_SUCCESS fmt XCODE_COLORS_RESET, ##__VA_ARGS__)
+// danger log
+#define LOG_DANGER XCODE_COLORS_ESCAPE @"fg255,255,255;" XCODE_COLORS_ESCAPE @"bg170,0,0;"
+#define dLOG(fmt, ...) NSLog(LOG_DANGER fmt XCODE_COLORS_RESET, ##__VA_ARGS__)
+
 
 # define isPad UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
