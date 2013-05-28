@@ -18,54 +18,47 @@
 #import "MMDrawerVisualState.h"
 #import "RootViewController.h"
 #import "OptionsViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
+
 //#import "PonyDebugger.h"
+
+@interface AppDelegate ()
+@property(nonatomic, strong) MPMoviePlayerViewController *playerController;
+
+@end
 
 @implementation AppDelegate
 
 BOOL printSubscriber;
+MPMoviePlayerViewController *playerController;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     [MagicalRecord setupCoreDataStack];
+
+    CGRect frame = [self frameForCurrentOrientation];
+    
+    
+    NSString *introName = frame.size.width > 768 ? @"intro-landscape" : @"intro-portrait";
+    NSLog(@"intro-name: %@", introName);
+    NSURL * movieUrl = [[NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource:introName ofType:@"m4v"]];
+    _playerController = [[MPMoviePlayerViewController alloc]initWithContentURL:movieUrl];
+    _playerController.view.frame = frame;
+    _playerController.moviePlayer.controlStyle = MPMovieControlStyleNone;
+    _playerController.wantsFullScreenLayout = YES;
+    _playerController.moviePlayer.scalingMode = MPMovieScalingModeAspectFill;
+    _playerController.moviePlayer.shouldAutoplay = YES;
+    [_playerController.moviePlayer setFullscreen:YES animated:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(moviePlayBackDidFinish:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:_playerController.moviePlayer];
+    
+    //[self.window.rootViewController presentModalViewController:playerController animated:NO];
+
     /*
-     
-     PANEL
-     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    UIStoryboard *storyboard = [self storyboard];
-    [self.window setRootViewController:[storyboard instantiateInitialViewController]];
-    
-        
-    wLOG(@"Mensagem de alerta!");
-    iLOG(@"Informação importante!");
-    NSLog(@"Nada demais!");
-
-    
-    return YES;
-}
-
-- (UIStoryboard *)storyboard
-{
-    NSString *sbName = @"Storyboard_";
-    if ([self isPad]) {
-        sbName = [sbName stringByAppendingString:@"iPad"];
-    }
-    else
-    {
-        sbName = [sbName stringByAppendingString:@"iPhone"];
-    }
-    
-    return [UIStoryboard storyboardWithName:sbName bundle:nil];
-}
-
-- (BOOL)isPad
-{
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-}
-     */
-    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
     UIViewController * leftSideDrawerViewController = [storyboard instantiateViewControllerWithIdentifier:@"leftViewController"];
     
@@ -83,10 +76,10 @@ BOOL printSubscriber;
     [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [drawerController setShouldStretchDrawer:NO];
     [drawerController setDrawerVisualStateBlock:[MMDrawerVisualState swingingDoorVisualStateBlock]];
-    
+    */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:drawerController];
+    [self.window setRootViewController:_playerController];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -159,6 +152,50 @@ BOOL printSubscriber;
     return YES;
 }
 
+- (CGRect)frameForCurrentOrientation
+{
+    CGRect frame;
+
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if (currentOrientation == UIInterfaceOrientationLandscapeLeft
+        || currentOrientation == UIInterfaceOrientationLandscapeRight) {
+        frame = CGRectMake(0, 0, 1024, 768);
+    }
+    else
+    {
+        frame = CGRectMake(0, 0, 768, 1024);
+    }
+
+    return frame;
+}
+
+-(void) moviePlayBackDidFinish:(NSNotification*)notification
+{
+    NSLog(@"Intro video stopped");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    UIViewController * leftSideDrawerViewController = [storyboard instantiateViewControllerWithIdentifier:@"leftViewController"];
+    
+    
+    UIViewController * centerViewController = [storyboard instantiateViewControllerWithIdentifier:@"centerViewController"];
+    
+    
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:navigationController
+                                             leftDrawerViewController:leftSideDrawerViewController];
+    [drawerController setMaximumLeftDrawerWidth:320.0];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    [drawerController setShouldStretchDrawer:NO];
+    [drawerController setDrawerVisualStateBlock:[MMDrawerVisualState swingingDoorVisualStateBlock]];
+    
+    [self.window setRootViewController:drawerController];
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {

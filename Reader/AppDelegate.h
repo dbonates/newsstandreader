@@ -10,10 +10,10 @@
 
 @class CredentialStore;
 
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) CredentialStore *credentialStore;
-
 @property (strong, nonatomic) UIWindow *window;
 
 /*
@@ -25,5 +25,7 @@
  - setCoverImage define o icone newsstand para a app com a imagem da última edição, além de exibir o badge de "novo" para o caso de have alguma edição não lida
  */
 - (void)setCoverImage;
+-(void) moviePlayBackDidFinish:(NSNotification*)notification;
+
 
 @end

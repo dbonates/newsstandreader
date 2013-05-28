@@ -25,6 +25,7 @@
 #import "UIViewController+MMDrawerController.h"
 
 #import "RevistaViewController.h"
+#import <AALaunchTransition/LaunchView.h>
 
 #define OPTIONS_SIZE CGSizeMake(320,240)
 #define LOGIN_WINSIZE CGSizeMake(340,280)
@@ -195,6 +196,11 @@
 {
     [super viewDidLoad];
     
+    
+    
+    LaunchView *launch = [[LaunchView alloc] init];
+    [self.view addSubview:launch];
+    [self.view bringSubviewToFront:launch];
     
     // login stuff
     self.credentialStore = [[CredentialStore alloc] init];
@@ -458,7 +464,7 @@
                                             PSPDFAnnotationTypeStringLine
                                             ]];
         
-         /*
+        /* 
        
          Anotações  possíveis
          

@@ -6,6 +6,12 @@
 // project.
 
 
+// AALaunchTransition
+#define COCOAPODS_POD_AVAILABLE_AALaunchTransition
+#define COCOAPODS_VERSION_MAJOR_AALaunchTransition 0
+#define COCOAPODS_VERSION_MINOR_AALaunchTransition 1
+#define COCOAPODS_VERSION_PATCH_AALaunchTransition 3
+
 // BlocksKit
 #define COCOAPODS_POD_AVAILABLE_BlocksKit
 #define COCOAPODS_VERSION_MAJOR_BlocksKit 1
