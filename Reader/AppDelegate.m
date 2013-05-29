@@ -141,7 +141,7 @@ MPMoviePlayerViewController *playerController;
 #endif
     
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeNewsstandContentAvailability];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeNewsstandContentAvailability | UIRemoteNotificationTypeAlert];
     
     NSLog(@"launch options %@", [launchOptions JSONString]);
     [self letServerKnowAboutPushTokenIfNeeded];
@@ -199,9 +199,32 @@ MPMoviePlayerViewController *playerController;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"did receive notification %@", [userInfo JSONString]);
-    [[IssueManager sharedInstance] update];
+    // NSLog(@"did receive notification %@", [userInfo JSONString]);
+    // for newsstand the notification payload must have: "content-available":1
     
+    int newMagazineNotificationVerifier = [[userInfo valueForKey:@"aps"] valueForKey:@"content-available"];
+    
+    if (newMagazineNotificationVerifier == 1) {
+        // new magazine available
+        [[IssueManager sharedInstance] update];
+    }
+    
+    else
+    {
+        NSString *msg = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+        if (msg) {
+            iLOG(@"Notificação recebida: %@", msg);
+            if ( application.applicationState == UIApplicationStateActive ) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dica da Panorama!"
+                                                                message:[[userInfo valueForKey:@"aps"] valueForKey:@"alert"]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+    }
+       
 }
 
 // indica erro ao registrar o aparelho para receber push notifications
