@@ -9,6 +9,7 @@ extern const struct IssueAttributes {
 	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *downloading;
 	__unsafe_unretained NSString *free;
+    __unsafe_unretained NSString *position;
 	__unsafe_unretained NSString *issueDescription;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *new;
@@ -95,6 +96,18 @@ extern const struct IssueFetchedProperties {
 - (void)setFreeValue:(BOOL)value_;
 
 //- (BOOL)validateFree:(id*)value_ error:(NSError**)error_;
+
+
+@property (nonatomic, strong) NSNumber *position;
+
+
+@property int32_t positionValue;
+- (int32_t)positionValue;
+- (void)setPositionValue:(int32_t)value_;
+
+//- (BOOL)validatePosition:(id*)value_ error:(NSError**)error_;
+
+
 
 
 
@@ -231,6 +244,16 @@ extern const struct IssueFetchedProperties {
 
 - (BOOL)primitiveFreeValue;
 - (void)setPrimitiveFreeValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitivePosition;
+- (void)setPrimitivePosition:(NSNumber*)value;
+
+- (NSInteger)primitivePositionValue;
+- (void)setPrimitivePositionValue:(NSInteger)value_;
+
 
 
 

@@ -8,6 +8,7 @@ const struct IssueAttributes IssueAttributes = {
 	.downloaded = @"downloaded",
 	.downloading = @"downloading",
 	.free = @"free",
+    .position = @"position",
 	.issueDescription = @"issueDescription",
 	.name = @"name",
 	.new = @"new",
@@ -63,6 +64,10 @@ const struct IssueFetchedProperties IssueFetchedProperties = {
 	}
 	if ([key isEqualToString:@"freeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"free"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+    if ([key isEqualToString:@"positionValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"position"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"newValue"]) {
@@ -165,6 +170,50 @@ const struct IssueFetchedProperties IssueFetchedProperties = {
 	[self setPrimitiveFree:[NSNumber numberWithBool:value_]];
 }
 
+
+
+
+
+@dynamic position;
+
+
+
+- (int32_t)positionValue {
+	NSNumber *result = [self position];
+	return [result intValue];
+}
+
+- (void)setPositionValue:(int32_t)value_ {
+	[self setPosition:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitivePositionValue {
+	NSNumber *result = [self primitivePosition];
+	return [result intValue];
+}
+
+- (void)setPrimitivePositionValue:(int32_t)value_ {
+	[self setPrimitivePositionValue:[NSNumber numberWithInt:value_]];
+}
+/*
+ - (int16_t)stateValue {
+ NSNumber *result = [self state];
+ return [result shortValue];
+ }
+ 
+ - (void)setStateValue:(int16_t)value_ {
+ [self setState:[NSNumber numberWithShort:value_]];
+ }
+ 
+ - (int16_t)primitiveStateValue {
+ NSNumber *result = [self primitiveState];
+ return [result shortValue];
+ }
+ 
+ - (void)setPrimitiveStateValue:(int16_t)value_ {
+ [self setPrimitiveState:[NSNumber numberWithShort:value_]];
+ }
+ */
 
 
 

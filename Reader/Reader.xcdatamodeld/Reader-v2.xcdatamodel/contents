@@ -16,6 +16,7 @@
         <attribute name="issueDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="new" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="productIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="purchased" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="receiptData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -31,6 +32,6 @@
     </entity>
     <elements>
         <element name="Asset" positionX="54" positionY="27" width="128" height="135"/>
-        <element name="Issue" positionX="-180" positionY="-14" width="128" height="284"/>
+        <element name="Issue" positionX="-180" positionY="-14" width="128" height="299"/>
     </elements>
 </model>

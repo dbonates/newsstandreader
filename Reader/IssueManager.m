@@ -25,6 +25,7 @@ NSString *PreviewsKey = @"data";
 NSString *TOCKey = @"contents";
 NSString *DateKey = @"created_at";
 NSString *FreeKey = @"free";
+NSString *positionKey = @"position";
 NSString *FreeURLKey = @"url";
 NSString *DescriptionKey = @"description";
 
@@ -215,7 +216,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         }
         
         for (NSDictionary *issueDictionary in newIssuesArray) {
-            NSLog(@"montando como subscriber: %d", isSubscribed);
+            NSLog(@"montando como subscriber? %d", isSubscribed);
             
             [self addNewIssue:issueDictionary downloadEverything:isSubscribed];
         }
@@ -235,6 +236,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
             issue = [Issue MR_createInContext:localContext];
             issue.productIdentifier = issueDictionary[ProductIdentifierKey];
             issue.name = issueDictionary[NameKey];
+            issue.position = [NSNumber numberWithInt:[issueDictionary[positionKey] intValue]];
             issue.toc = [issueDictionary[TOCKey] JSONString];
             issue.stateValue = IssueStateAdded;
             issue.state = @(IssueStateAdded);
@@ -283,9 +285,11 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         }
         
         for (Asset *asset in issue.assets) {
+            
             if ([asset.type isEqualToString:AssetTypeDocument])
                 continue;
             NSURL *url = [NSURL URLWithString:asset.url];
+            iLOG(@"tentando download para issue %@: %@", issue.name, url);
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
             NKAssetDownload *assetDownload = [nkIssue addAssetWithRequest:request];
@@ -541,8 +545,8 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         }
         else {
             NSLog(@"this really shouldn't have happened %@", error);
-            asset.downloaded = @YES;
-            asset.filePath = fileURL.path;
+            asset.downloaded = NO;
+//            asset.filePath = fileURL.path;
         }
         
         NSUInteger assetsLeftToDownload = 0;

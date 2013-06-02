@@ -76,20 +76,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterReadyIssues:) name:@"panorama.filterReadyIssues" object:nil];
     
-    NSPredicate *predicate;
-    if (showOnlyReadyIssues) {
-        predicate = [NSPredicate predicateWithFormat:@"state == %@", @(IssueStateReadyForReading)];
-    }
-    else
-    {
-        predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
-    }
-    
-    self.fetchedResultsController = [Issue MR_fetchAllSortedBy:@"date"
-                                                     ascending:NO
-                                                 withPredicate:predicate
-                                                       groupBy:nil
-                                                      delegate:self];
+    [self setupFetchController];
 	
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundChoosed:) name:@"panorama.backgroundChanged" object:nil];
     
@@ -104,6 +91,32 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     }
 }
 
+- (void)setupFetchController
+{
+    NSPredicate *predicate;
+    if (showOnlyReadyIssues) {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@", @(IssueStateReadyForReading)];
+    }
+    else
+    {
+        predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
+    }
+    
+    self.fetchedResultsController = [Issue MR_fetchAllSortedBy:@"position"
+                                                     ascending:YES
+                                                 withPredicate:predicate
+                                                       groupBy:nil
+                                                      delegate:self];
+    
+    NSArray *edicoes = self.fetchedResultsController.fetchedObjects;
+    for (int i=0; i< [edicoes count]; i++) {
+        Issue *c_issue = [edicoes objectAtIndex:i];
+        iLOG(@"edição: %@: position: %@", c_issue.name, c_issue.position );
+    }
+    
+    
+}
+
 - (void)filterReadyIssues:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
@@ -114,20 +127,7 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
     [[NSUserDefaults standardUserDefaults] setBool:showOnlyReadyIssues forKey:@"showOnlyReadyIssues"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSPredicate *predicate;
-    if (showOnlyReadyIssues) {
-        predicate = [NSPredicate predicateWithFormat:@"state == %@", @(IssueStateReadyForReading)];
-    }
-    else
-    {
-        predicate = [NSPredicate predicateWithFormat:@"state == %@ OR state == %@", @(IssueStateReadyForDisplayInShelf), @(IssueStateReadyForReading)];
-    }
-    
-    self.fetchedResultsController = [Issue MR_fetchAllSortedBy:@"date"
-                                                     ascending:NO
-                                                 withPredicate:predicate
-                                                       groupBy:nil
-                                                      delegate:self];
+    [self setupFetchController];
     
     [self.collectionView reloadData];
 
