@@ -16,6 +16,25 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scroller;
 @property (weak, nonatomic) IBOutlet UISwitch *readyIssuesFilterSwitch;
 
+// allViews
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *assinanteView;
+@property (weak, nonatomic) IBOutlet UIView *restaurarComprasView;
+@property (weak, nonatomic) IBOutlet UIView *escolherBk;
+@property (weak, nonatomic) IBOutlet UIView *filtroView;
+@property (weak, nonatomic) IBOutlet UIView *generalOptionsView;
+
+@property (weak, nonatomic) IBOutlet UIView *loginFormView;
+@property (weak, nonatomic) IBOutlet UIView *infoAssinanteView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *bkBtn3;
+@property (weak, nonatomic) IBOutlet UIButton *bkBtn13;
+@property (weak, nonatomic) IBOutlet UIButton *bkBtn7;
+@property (weak, nonatomic) IBOutlet UIButton *bkBtn9;
+@property (weak, nonatomic) IBOutlet UITextView *debugInfo;
+
 - (IBAction)changeBk:(id)sender;
 - (IBAction)restaurarCompras:(id)sender;
 

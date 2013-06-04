@@ -42,7 +42,7 @@ MPMoviePlayerViewController *playerController;
     
     
     NSString *introName = frame.size.width > 768 ? @"intro-landscape" : @"intro-portrait";
-    NSLog(@"intro-name: %@", introName);
+//    NSLog(@"intro-name: %@", introName);
     NSURL * movieUrl = [[NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource:introName ofType:@"m4v"]];
     _playerController = [[MPMoviePlayerViewController alloc]initWithContentURL:movieUrl];
     _playerController.view.frame = frame;
@@ -143,7 +143,7 @@ MPMoviePlayerViewController *playerController;
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeNewsstandContentAvailability | UIRemoteNotificationTypeAlert];
     
-    NSLog(@"launch options %@", [launchOptions JSONString]);
+//    NSLog(@"launch options %@", [launchOptions JSONString]);
     [self letServerKnowAboutPushTokenIfNeeded];
     
     
@@ -172,7 +172,7 @@ MPMoviePlayerViewController *playerController;
 
 -(void) moviePlayBackDidFinish:(NSNotification*)notification
 {
-    NSLog(@"Intro video stopped");
+//    NSLog(@"Intro video stopped");
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
     UIViewController * leftSideDrawerViewController = [storyboard instantiateViewControllerWithIdentifier:@"leftViewController"];
     
@@ -231,6 +231,10 @@ MPMoviePlayerViewController *playerController;
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     NSLog(@"\n*****\n\n [linha %d] Falha ao registrar para push notifications \n     %@\n\n*****", __LINE__, error);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"token.save.error"];
+    [defaults setObject:[error description] forKey:@"token.save.error.message"];
+    [defaults synchronize];
 }
 
 
@@ -240,6 +244,15 @@ MPMoviePlayerViewController *playerController;
 
     NSLog(@"registrado com sucesso. token: %@", deviceToken);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *tokenString = [NSString stringWithFormat:@"%@", [deviceToken description]];
+    tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    tokenString = [tokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    tokenString = [tokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
+    
+    
+    [defaults setObject:tokenString forKey:@"token.string.saved"];
+    
     [defaults setValue:deviceToken forKey:@"com.reader.pushToken"];
     [defaults setValue:@NO forKey:@"com.reader.serverNotified"];
     [defaults synchronize];
@@ -260,22 +273,21 @@ MPMoviePlayerViewController *playerController;
             [request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
             NSDictionary *dict = @{@"bundle_id":[NSBundle mainBundle].bundleIdentifier, @"push_token":@{@"token" : [pushToken base64Encode]}};
             NSData *body = [dict JSONData];
-            NSLog(@"request data%@", [dict JSONString]);
+//            NSLog(@"request data%@", [dict JSONString]);
             [request setHTTPBody:body];
             
-//            NSLog(@"url:\n%@", serverURL);
+//            NSLog(@"letServerKnowAboutPushTokenIfNeeded url:\n%@", serverURL);
 //            NSLog(@"data:\n%@", body);
-            
+//            NSLog(@"REQUEST:\n%@", request);
             [request setHTTPMethod:@"POST"];
             [NSURLConnection sendAsynchronousRequest:request
                                                queue:[NSOperationQueue mainQueue]
                                    completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                                       NSLog(@"registered response %@", response);
-                                       NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                       NSLog(@"registered data %@", string);
-                                       NSLog(@"registered error %@", error);
+//                                       NSLog(@"registered response %@", response);
+//                                       NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//                                       NSLog(@"registered data %@", string);
                                        if (!error) {
-                                           NSLog(@"setting defaults");
+//                                           NSLog(@"setting defaults");
                                            [defaults setValue:@YES forKey:@"com.reader.serverNotified"];
                                            [defaults synchronize];
                                        }
@@ -289,7 +301,7 @@ MPMoviePlayerViewController *playerController;
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"store cache state > %d",[InAppStore sharedInstance].storeCacheState);
+//    NSLog(@"store cache state > %d",[InAppStore sharedInstance].storeCacheState);
 }
 
 - (void)logIssues

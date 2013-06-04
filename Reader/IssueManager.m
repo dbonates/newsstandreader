@@ -80,7 +80,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
     
     NSURL *url = [NSURL URLWithString:[UPDATE_URL stringByAppendingString:[NSBundle mainBundle].bundleIdentifier]];
     
-    NSLog(@"updatetURL :: url: %@", url);
+//    NSLog(@"updatetURL :: url: %@", url);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
@@ -102,7 +102,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
 
 - (void)resumeUnfinishedDownloads
 {
-    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
+//    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
     
     NSUInteger nkUnfinishedDownloads = 0;
     NKLibrary *library = [NKLibrary sharedLibrary];
@@ -123,17 +123,17 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         }
     }
     
-    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
+//    NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
     
     if (nkUnfinishedDownloads) {
-                  NSLog(@"resumed nk downloads");
+//                  NSLog(@"resumed nk downloads");
     }
     else {
-        NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
+//        NSLog(@"[%d] %s", __LINE__, __FUNCTION__);
         NSArray *unfinishedDownloads = [Asset MR_findByAttribute:@"downloaded" withValue:@NO];
 //        if (!unfinishedDownloads.count)
   //          unfinishedDownloads = [Asset MR_findByAttribute:@"downloaded" withValue:nil];
-        NSLog(@"unfinished downloads %@", unfinishedDownloads);
+//        NSLog(@"unfinished downloads %@", unfinishedDownloads);
         for (Asset *asset in unfinishedDownloads) {
             NKIssue *nkIssue = [library issueWithName:asset.issue.productIdentifier];
                         
@@ -289,7 +289,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
             if ([asset.type isEqualToString:AssetTypeDocument])
                 continue;
             NSURL *url = [NSURL URLWithString:asset.url];
-            iLOG(@"tentando download para issue %@: %@", issue.name, url);
+//            iLOG(@"tentando download para issue %@: %@", issue.name, url);
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
             NKAssetDownload *assetDownload = [nkIssue addAssetWithRequest:request];
@@ -396,7 +396,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         NSURL *url = [NSURL URLWithString:requestURLString];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-        NSLog(@"URL para esta edição: %@", requestURLString);
+//        NSLog(@"URL para esta edição: %@", requestURLString);
         
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
@@ -538,16 +538,29 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
         
         BOOL moved;
         NSError *error = nil;
-        moved = [fileManager moveItemAtURL:destinationURL toURL:fileURL error:&error];
-        if (moved) {
+        
+        BOOL arquivoJaExiste = [fileManager fileExistsAtPath:[fileURL path]];
+        
+        if (!arquivoJaExiste) {
+            moved = [fileManager moveItemAtURL:destinationURL toURL:fileURL error:&error];
+            if (moved) {
+                asset.downloaded = @YES;
+                asset.filePath = fileURL.path;
+            }
+            else {
+                NSLog(@"this really shouldn't have happened %@", error);
+                asset.downloaded = @YES;
+                asset.filePath = fileURL.path;
+            }
+        }
+        else
+        {
+         
+            dLOG(@"Arquivo já existe: %@ - ignorando...", [fileURL path]);
             asset.downloaded = @YES;
             asset.filePath = fileURL.path;
         }
-        else {
-            NSLog(@"this really shouldn't have happened %@", error);
-            asset.downloaded = NO;
-//            asset.filePath = fileURL.path;
-        }
+        
         
         NSUInteger assetsLeftToDownload = 0;
         
@@ -560,7 +573,7 @@ NSString * IssueManagerFirstStartDownloadedAllNotification = @"com.reader.issueM
                 documentDownloaded = YES;
             }
         }
-        
+        iLOG(@"Downloads faltando: %d", assetsLeftToDownload);
         if (!assetsLeftToDownload) {
             issue.stateValue = IssueStateReadyForDisplayInShelf;
 //            Asset *coverAsset = [Asset MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"type == %@ AND issue == %@", AssetTypeCover, issue]];

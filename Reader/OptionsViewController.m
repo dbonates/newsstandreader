@@ -14,9 +14,13 @@
 #import "LoginViewController.h"
 #import "AuthAPIClient.h"
 #import "SVProgressHUD.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface OptionsViewController ()
 @property (nonatomic, strong) CredentialStore *credentialStore;
+@property (nonatomic, strong) NSArray *allViews;
+
+
 @end
 
 @implementation OptionsViewController
@@ -25,6 +29,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setupAssinanteInfo];
+    
+    [self setupShadowsOnBkButtons];
+    
+    self.allViews = @[self.headerView,
+                      self.assinanteView,
+                      self.restaurarComprasView,
+                      self.escolherBk,
+                      self.filtroView,
+                      self.generalOptionsView];
+    
+    [self layoutViews];
 
     self.scroller.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern14_lateral"]];
@@ -32,6 +49,11 @@
     self.readyIssuesFilterSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"showOnlyReadyIssues"];
     // login stuff
     self.credentialStore = [[CredentialStore alloc] init];
+    
+    
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(tokenExpiredProvidences:) name:@"token-expired" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -39,13 +61,98 @@
 
 }
 
+- (void)setupAssinanteInfo
+{
+    if ([self.credentialStore isLoggedIn]) {
+        self.usernameLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"username"];
+        self.loginFormView.hidden = YES;
+        self.infoAssinanteView.hidden = NO;
+        
+        CGRect frame = CGRectMake(0, 0, 320, 77);
+        self.assinanteView.frame = frame;
+    }
+    else
+    {
+        self.loginFormView.hidden = NO;
+        self.infoAssinanteView.hidden = YES;
+        CGRect frame = CGRectMake(0, 0, 320, 275);
+        self.assinanteView.frame = frame;
 
+    }
+}
+
+- (void)setupShadowsOnBkButtons
+{
+    // shadowzinha nos botoes de bk
+    self.bkBtn3.layer.borderColor = [UIColor colorWithRed:0.906 green:0.917 blue:0.798 alpha:1.000].CGColor;
+    self.bkBtn3.layer.borderWidth = 3.0f;
+    self.bkBtn3.layer.cornerRadius = 10.0f;
+    self.bkBtn3.layer.masksToBounds = NO;
+    self.bkBtn3.layer.shadowOffset = CGSizeMake(3, 3);
+    self.bkBtn3.layer.shadowRadius = 5;
+    self.bkBtn3.layer.shadowOpacity = 0.5;
+    
+    self.bkBtn13.layer.borderColor = [UIColor colorWithRed:0.906 green:0.917 blue:0.798 alpha:1.000].CGColor;
+    self.bkBtn13.layer.borderWidth = 3.0f;
+    self.bkBtn13.layer.cornerRadius = 10.0f;
+    self.bkBtn13.layer.masksToBounds = NO;
+    self.bkBtn13.layer.shadowOffset = CGSizeMake(3, 3);
+    self.bkBtn13.layer.shadowRadius = 5;
+    self.bkBtn13.layer.shadowOpacity = 0.5;
+    
+    self.bkBtn7.layer.borderColor = [UIColor colorWithRed:0.906 green:0.917 blue:0.798 alpha:1.000].CGColor;
+    self.bkBtn7.layer.borderWidth = 3.0f;
+    self.bkBtn7.layer.cornerRadius = 10.0f;
+    self.bkBtn7.layer.masksToBounds = NO;
+    self.bkBtn7.layer.shadowOffset = CGSizeMake(3, 3);
+    self.bkBtn7.layer.shadowRadius = 5;
+    self.bkBtn7.layer.shadowOpacity = 0.5;
+    
+    self.bkBtn9.layer.borderColor = [UIColor colorWithRed:0.906 green:0.917 blue:0.798 alpha:1.000].CGColor;
+    self.bkBtn9.layer.borderWidth = 3.0f;
+    self.bkBtn9.layer.cornerRadius = 10.0f;
+    self.bkBtn9.layer.masksToBounds = NO;
+    self.bkBtn9.layer.shadowOffset = CGSizeMake(3, 3);
+    self.bkBtn9.layer.shadowRadius = 5;
+    self.bkBtn9.layer.shadowOpacity = 0.5;
+}
+
+- (void)layoutViews
+{
+    int total = self.allViews.count;
+    CGRect frame;
+    UIView *optionView;
+    UIView *precedentView;
+    
+    for (int i=0; i<total; i++) {
+        
+        optionView = [self.allViews objectAtIndex:i];
+        precedentView = i > 0 ? [self.allViews objectAtIndex:i-1] : nil;
+
+        
+        frame = i == 0 ?
+        CGRectMake(0, 0, optionView.frame.size.width, optionView.frame.size.height) : 
+        CGRectMake(0, precedentView.frame.origin.y + precedentView.frame.size.height, optionView.frame.size.width, optionView.frame.size.height);
+        
+        
+        optionView.frame = frame;
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     self.scroller.contentSize = CGSizeMake(320, 1024);
 //    self.scroller.scrollEnabled = YES;
-
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([defaults boolForKey:@"token.save.error"] == YES) {
+        self.debugInfo.text = [defaults valueForKey:@"token.save.error.message"];
+    }
+    else
+    {
+        self.debugInfo.text = [defaults valueForKey:@"token.string.saved"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,8 +253,15 @@
         [[InAppStore sharedInstance] fakeSubscriber];
     }];
     
+    [self ativarAssinante];
 }
 
+
+- (void)ativarAssinante
+{
+    [self setupAssinanteInfo];
+    [self layoutViews];
+}
 
 - (void)tokenExpiredProvidences:(NSNotification *)notification
 {
@@ -172,6 +286,7 @@
 
 - (void)login:(id)sender
 {
+    [self.view endEditing:YES];
     [SVProgressHUD show];
     // iLOG(@"login...");
     id params = @{
@@ -179,7 +294,7 @@
                   @"password": self.passwordField.text
                   };
     // iLOG(@"params definidos como: %@...", params);
-    
+    [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"username"];
     [[AuthAPIClient sharedClient] postPath:@"auth/signin" parameters:params
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        sLOG(@"Sucesso ao logar");
@@ -213,6 +328,7 @@
 
 - (void)cancel:(id)sender
 {
+    [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

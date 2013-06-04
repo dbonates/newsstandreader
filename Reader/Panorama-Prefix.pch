@@ -20,13 +20,13 @@
 //    #define RECEIPT_URL    @"http:/localhost/api/receipt.json?id="
 //    #define PUSH_URL     @"http://localhost"
 
-//#define UPDATE_URL   @"http://panorama.bonates.com/api/protocol.json?id="
-//#define RECEIPT_URL    @"http://panorama.bonates.com/api/receipt.json?id="
-//#define PUSH_URL     @"http://panorama.bonates.com"
+#define UPDATE_URL   @"http://panorama.bonates.com/api/protocol.json?id="
+#define RECEIPT_URL    @"http://panorama.bonates.com/api/receipt.json?id="
+#define PUSH_URL     @"http://panorama.bonates.com/push_tokens.json"
 
-#define UPDATE_URL   @"http://ipadreaderserver.dev/api/protocol.json?id="
-#define RECEIPT_URL    @"http://ipadreaderserver.dev/api/receipt.json?id="
-#define PUSH_URL     @"http://ipadreaderserver.dev"
+//#define UPDATE_URL   @"http://ipadreaderserver.dev/api/protocol.json?id="
+//#define RECEIPT_URL    @"http://ipadreaderserver.dev/api/receipt.json?id="
+//#define PUSH_URL     @"http://ipadreaderserver.dev"
 
 
 

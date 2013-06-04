@@ -108,11 +108,11 @@ static NSString *MagazineRackCellReuseIdentifier = @"MagazineRackCell";
                                                        groupBy:nil
                                                       delegate:self];
     
-    NSArray *edicoes = self.fetchedResultsController.fetchedObjects;
-    for (int i=0; i< [edicoes count]; i++) {
-        Issue *c_issue = [edicoes objectAtIndex:i];
-        iLOG(@"edição: %@: position: %@", c_issue.name, c_issue.position );
-    }
+//    NSArray *edicoes = self.fetchedResultsController.fetchedObjects;
+//    for (int i=0; i< [edicoes count]; i++) {
+//        Issue *c_issue = [edicoes objectAtIndex:i];
+//        iLOG(@"edição: %@: position: %@", c_issue.name, c_issue.position );
+//    }
     
     
 }

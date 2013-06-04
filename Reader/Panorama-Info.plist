@@ -16,8 +16,6 @@
 			<array>
 				<string>Icon.png</string>
 				<string>Icon@2x.png</string>
-				<string>Icon-144.png</string>
-				<string>Icon-72.png</string>
 				<string>Icon-72@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
@@ -27,8 +25,8 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>Icon.png</string>
-				<string>Icon.png@2x</string>
+				<string>Icon-newsstand.png</string>
+				<string>Icon-newsstand@2x.png</string>
 			</array>
 			<key>UINewsstandBindingEdge</key>
 			<string>UINewsstandBindingEdgeLeft</string>
