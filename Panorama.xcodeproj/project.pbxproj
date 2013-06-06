@@ -1687,8 +1687,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8AE5CD8588242E8A91DF299 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Daniel Bonates";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Daniel Bonates";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Daniel Bonates (8HHXR9YSNU)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Daniel Bonates (8HHXR9YSNU)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/PSPDFKit.embeddedframework\"",
@@ -1702,8 +1702,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = Panorama;
-				PROVISIONING_PROFILE = "C4A2DF54-D429-4A3F-8672-642157613CF7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4A2DF54-D429-4A3F-8672-642157613CF7";
+				PROVISIONING_PROFILE = "B1F424DC-6B2A-400C-B598-55FECFB71A5F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B1F424DC-6B2A-400C-B598-55FECFB71A5F";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
